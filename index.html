@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="suyumen"><meta name="renderer" content="webkit"><meta name="copyright" content="suyumen"><meta name="keywords" content="SUYUMEN"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>SUYUMEN</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><meta name="generator" content="Hexo 5.4.0"></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/avatar.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">suyumen</div><div class="profile-signature">目前主要在学习web相关</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/back.jpg);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">SUYUMEN</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1>SUYUMEN</h1><h5>---一样人间，明日我来---</h5><div class="intro-social"><a class="fa fa-envelope" href="mailto:3403232965@qq.com" title="email"></a><a class="fa fa-github" href="https://github.com/suyumen" target="_blank" title="github"></a></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><section id="recent-posts"><div class="recent-post-item"><div class="post-title"><a href="/2021/07/26/2021-07-26-%5B%E7%BD%91%E9%BC%8E%E6%9D%AF2020%5DSSRFMe/">网鼎杯-2020-SSRFMe</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2021-07-25T18:27:24.000Z">2021-07-26</time></div><div class="recent-post-content">
+没有做过ssrf的题，找一个了解一下。直接给了源码：
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758&lt;?phpfunction check_inner_ip($url)&#123;    $match_result=preg_match(&#x27;/^(http|https|gopher|dict)?:\/\/.*(\/)?.*$/&#x27;,$url);    if (!$match_result)    &#12 ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="ssrf"> ssrf</a></div><div class="read-more"><a class="more" href="/2021/07/26/2021-07-26-%5B%E7%BD%91%E9%BC%8E%E6%9D%AF2020%5DSSRFMe/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2021/07/23/2021-07-23-%5BRCTF%202019%5DNextphp/">RCTF-2019-Nextphp</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2021-07-22T18:27:24.000Z">2021-07-23</time></div><div class="recent-post-content">
+页面打开直接是源码
+123456&lt;?phpif (isset($_GET[&#x27;a&#x27;])) &#123;    eval($_GET[&#x27;a&#x27;]);&#125; else &#123;    show_source(__FILE__);&#125;
+
+扫了一下，没有别的东西了。
+查下禁用函数：
+?a=phpinfo();
+PHP Version 7.4.0-dev
+1set_time_limit,ini_set,pcntl_alarm,pcntl_fork,pcntl_waitpid,pcntl_wait,pcntl_wifexited,pcntl_w ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="FFI"> FFI</a></div><div class="read-more"><a class="more" href="/2021/07/23/2021-07-23-%5BRCTF%202019%5DNextphp/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2021/07/20/2021-07-20-nmap/">nmap</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2021-07-19T18:27:24.000Z">2021-07-20</time></div><div class="recent-post-content">
+TCP连接扫描nmap -sT &lt;host address&gt;
+SYN扫描nmap -sS &lt;host address&gt; 
+绕过ping扫描nmap -Pn &lt;host address&gt;
+UDP扫描nmap -sU &lt;host address&gt;
+使用僵尸机对目标机发送数据包nmap -sI 僵尸ip 目标ip
+MAC地址欺骗nmap -sT -PN --spoof-mac 0 &lt;host address&gt;
+检测哪些端口被屏蔽nmap -sA &lt;host address&gt; 
+扫描指定端口nmap &lt;host addre ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="工具"> 工具</a></div><div class="read-more"><a class="more" href="/2021/07/20/2021-07-20-nmap/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2021/07/10/2021-07-12-%5BEIS%202019%5DEzPOP/">EIS-2019-EzPOP</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2021-07-09T18:27:24.000Z">2021-07-10</time></div><div class="recent-post-content">
+直接给了源码：
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123&lt;?phperror_reporting(0);cla ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="反序列化"> 反序列化</a></div><div class="read-more"><a class="more" href="/2021/07/10/2021-07-12-%5BEIS%202019%5DEzPOP/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2021/07/10/2021-07-10-php%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">php序列化与反序列化</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2021-07-09T18:27:24.000Z">2021-07-10</time></div><div class="recent-post-content">
+序列化将变量或对象转换成字符串的过程。
+1$my = serialize($Site);
+
+反序列化1unserialize(string $my)
+如果传入的字符串不可被反序列化，则会返回FALSE，并产生一个 E_NOTICE。
+魔术函数：_construct()：创建对象时初始化
+_destruction()：结束时销毁对象
+_toString()：对象被当作字符串时使用
+_sleep()：序列化对象之前调用
+_wakeup()：反序列化之前调用
+_call()：调用对象不存在时使用
+_get()：调用私有属性时使用
+_set(): 给私有属性赋值时使用
+_invoke()：当尝试以调 ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="php常识"> php常识</a></div><div class="read-more"><a class="more" href="/2021/07/10/2021-07-10-php%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2021/07/08/2021-07-08-php%E7%9A%84%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1/">php的类与对象</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2021-07-07T18:27:24.000Z">2021-07-08</time></div><div class="recent-post-content">
+因为碰到反序列化的题会碰到php的类相关的知识，有时候看代码不太懂，所以特意学习一下php的类与对象。军训太忙了，中午要洗衣服睡觉，晚上要搞志协的工作然后就又要睡觉了……水成两篇，下一篇记序列化相关的东西。
+
+类定义123456789101112131415161718192021222324&lt;?phpclass Site &#123;  /* 成员变量 */  var $url;  var $title;    /* 成员函数 */  function setUrl($par)&#123;     $this-&gt;url = $par;  &#125;    function g ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="php常识"> php常识</a></div><div class="read-more"><a class="more" href="/2021/07/08/2021-07-08-php%E7%9A%84%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2021/07/03/2021-07-06-php%E5%BC%82%E6%88%96%E8%AE%A1%E7%AE%97/">php异或计算</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2021-07-02T18:27:24.000Z">2021-07-03</time></div><div class="recent-post-content">
+绕过原理1.字符异或计算。
+2.如eval()函数在执行时，如果内部有计算式，会先进行计算再执行函数。
+常用场景1.eval()命令执行；2.正则未过滤异或计算符。
+magic_quotes_gpc()函数https://www.php.net/manual/zh/function.get-magic-quotes-gpc.php
+版本：PHP 4，PHP 5，PHP 7
+get_magic_quotes_gpc — 获取当前 magic_quotes_gpc 的配置选项设置
+自PHP 7.4.0 起废弃。 强烈建议不要使用本函数。
+
+在php的配置文件中，有个布尔值的设置magic_quo ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="异或绕过"> 异或绕过</a></div><div class="read-more"><a class="more" href="/2021/07/03/2021-07-06-php%E5%BC%82%E6%88%96%E8%AE%A1%E7%AE%97/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2021/07/03/2021-07-03-%5B%E7%BE%8A%E5%9F%8E%E6%9D%AF2020%5DEasyphp2/">羊城杯2020Easyphp2</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2021-07-02T18:27:24.000Z">2021-07-03</time></div><div class="recent-post-content">
+进入之后界面显示404 Sorry, only people from GWHT are allowed to access this website.23333
+观察到url是
+http://3d9dc9d7-0e2a-4cb9-93ad-3f176e320dd3.node4.buuoj.cn/?file=GWHT.php
+扫了一下目录，在/robots.txt得到Disallow: /?file=check.php
+考虑用php://filter协议
+试一下
+/?file=php://filter/read=convert.base64-encode/resource=check.php ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="php伪协议"> php伪协议</a></div><div class="read-more"><a class="more" href="/2021/07/03/2021-07-03-%5B%E7%BE%8A%E5%9F%8E%E6%9D%AF2020%5DEasyphp2/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2021/05/20/2021-05-20-%5BNCTF2019%5DSQLi/">NCTF-2019-SQLi</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2021-05-19T18:27:24.000Z">2021-05-20</time></div><div class="recent-post-content">
+特意找点sql注入的题来写写（万一能自己写出来了呢……）
+开题是登录界面，给了源逻辑
+1sqlquery : select * from users where username=&#x27;&#x27; and passwd=&#x27;&#x27;
+
+
+扫了一下目录，robots.txt有东西，提示hint.txt，转到hint.txt，发现以下：
+123456$black_list = &quot;/limit|by|substr|mid|,|admin|benchmark|like|or|char|union|substring|select|greatest|%00|\&#x27; ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="sql注入"> sql注入</a><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="正则注入"> 正则注入</a></div><div class="read-more"><a class="more" href="/2021/05/20/2021-05-20-%5BNCTF2019%5DSQLi/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2021/05/19/2021-05-19-%5BSUCTF%202019%5DEasySQL/">SUCTF-2019-EasySQL</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2021-05-18T18:27:24.000Z">2021-05-19</time></div><div class="recent-post-content">
+POST数字后回显Array ( [0] =&gt; 1 )；
+字母后没有回显；
+有长度限制；
+过滤了OR ，&amp; ，select * from ，flag
+没有错误信息，，我尬住了。
+
+堆叠注入个人理解就是使用;闭合，造成执行多行sql命令效果。
+
+继续看题，查询库名试一下：
+11;show databases;
+
+回显
+1234567Array ( [0] =&gt; 1 ) Array ( [0] =&gt; ctf ) Array ( [0] =&gt; ctftraining ) Array ( [0] =&gt; information_schema ) Array ( [ ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="sql注入"> sql注入</a><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="堆叠注入"> 堆叠注入</a></div><div class="read-more"><a class="more" href="/2021/05/19/2021-05-19-%5BSUCTF%202019%5DEasySQL/#more">ReadMore</a></div><hr></div></section><nav class="cxo-page-nav"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">NEXT &amp;#62;</a></nav></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a target="_blank" rel="noopener" href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
