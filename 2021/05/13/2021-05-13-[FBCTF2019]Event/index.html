@@ -104,6 +104,8 @@
 <p>直接访问回显<code>You have to login first.</code>;</p>
 <p><code>dirsearch</code>扫了一下，没东西。</p>
 <p>随便输入，抓包，发现response的 <code>cookie</code>很奇怪：</p>
+<span id="more"></span>
+
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Set-Cookie: user=IjEi.YJ0wCw.D30Z1pNcejSaIIxNINFDz4E5dGw; Path=/</span><br><span class="line">Set-Cookie: events_sesh_cookie=.eJwlzrsRwjAMANBdVKfQx46sLMPJsnTQJqTi2J2CN8H7wKPOvJ5wvM87N3i8Fhwwc3LlsMV9dmujtcI2sBc5KhaZ1WTeZVcT8r1cS6KVh8uIiiBdhWHdByMGh4chiixdki4WyW1QJmlK9AohVKKZOBqxRCzY4L7y_GcIvj-t9S9P.YJ0wCw.rChG277NjUvzScdtRaqbcEsnCFg; HttpOnly; Path=/</span><br></pre></td></tr></table></figure>
 
 <p>猜测是<code>cookie</code>伪造，<strong>然后我就不会啦</strong>。</p>
