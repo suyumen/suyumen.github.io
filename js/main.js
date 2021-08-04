@@ -143,9 +143,9 @@ default = function() {
             0 === u ? (t.removeClass("main-color"), e.css("top", 0), e.removeClass("nav-style-two"), i.addClass("close")) : (e.addClass("nav-style-two"), t.addClass("main-color"), i.removeClass("close")),
             d && (1 === h ? (o.css("position", "fixed"), o.css("top", "0")) : -1 === h && (o.css("position", "absolute"), o.css("top", r)),
             function(e, t, o) {
-                var r = $(document).height(),//修改
+                var r = $(window).height(),
                 i = void 0;
-                i = (i = e < n ? 0 : (e - t) / (o - r) * 100) >= 200 ? 200 : i,
+                i = (i = e < n ? 0 : (e - t) / (o - r) * 100) >= 100 ? 100 : i,
                 s[0].style.width = i + "%"
             } (u, v, p),
             function(e) {
