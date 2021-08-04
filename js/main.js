@@ -145,7 +145,7 @@ default = function() {
             function(e, t, o) {
                 var r = $(document).height(),//修改
                 i = void 0;
-                i = (i = e < n ? 0 : (e - t) / (o - r) * 100) >= 100 ? 100 : i,
+                i = (i = e < n ? 0 : (e - t) / (o - r) * 100) >= 200 ? 200 : i,
                 s[0].style.width = i + "%"
             } (u, v, p),
             function(e) {

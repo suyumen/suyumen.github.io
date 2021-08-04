@@ -234,7 +234,7 @@ del
 {
 	width: 6px;
 	height: 6px;
-	background-color: rgba(0,0,0,.2)
+	background-color: rgb(0, 0, 0)
 }
 
 ::-webkit-scrollbar-thumb
@@ -379,7 +379,7 @@ del
 
 .category a:hover,.tag-cloud a:hover
 {
-	color: #f87427!important
+	color: #504c49d2!important
 }
 
 .article-sort
@@ -549,7 +549,7 @@ del
 
 .profile-avatar:hover
 {
-	background-color: snow
+	background-color: rgb(253, 228, 228)
 }
 
 .profile-avatar i
@@ -715,7 +715,7 @@ del
 	position: relative;
 	margin-left: 0;
 	margin-right: .5rem;
-	color: #fff
+	color: rgb(252, 217, 217)
 }
 
 #cxo-intro-nav
@@ -1605,7 +1605,7 @@ del
 
 .article-entry .gist .gist-file .gist-meta a,.recent-post-content .gist .gist-file .gist-meta a
 {
-	color: #258fb8;
+	color: #f7def1;
 	font-weight: 400
 }
 
