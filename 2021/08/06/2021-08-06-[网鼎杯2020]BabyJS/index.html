@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="suyumen"><meta name="renderer" content="webkit"><meta name="copyright" content="suyumen"><meta name="keywords" content="SUYUMEN"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>网鼎杯-2020-BabyJS · SUYUMEN</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><meta name="generator" content="Hexo 5.4.0"></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/avatar.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">suyumen</div><div class="profile-signature">目前主要在学习web相关</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/back.jpg);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">SUYUMEN</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">网鼎杯-2020-BabyJS</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2021-08-06</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="ssrf"> ssrf</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="js"> js</a></span></div><div class="post-intro-read"><span> Word count: <span class="post-count">821</span> | Reading time: <span class="post-count">3</span>min</span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><hr>
+<p>下载附件得到了一群代码，简单看了以下，完全做不来。。。真吓人。。</p>
+<p>在<code>readme</code>文件中有如下信息：</p>
+<blockquote>
+<p>该目录下的文件，对应在远程主机上的目录为 /source ,<br>例如：该目录下 app.js 在远程主机上的绝对路径为 /source/app.js .</p>
+</blockquote>
+<p>在<code>routes</code>下的<code>index.js</code>文件里有：(但是没太明白为什么这个文件是主逻辑文件，在这个位置)</p>
+<p>网上找到的wp不太多，只能勉强跟着做。</p>
+<span id="more"></span>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> config = <span class="built_in">require</span>(<span class="string">&#x27;../config&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> url=<span class="built_in">require</span>(<span class="string">&#x27;url&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> child_process=<span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> fs=<span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> request=<span class="built_in">require</span>(<span class="string">&#x27;request&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> router = express.Router();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> blacklist=[<span class="string">&#x27;127.0.0.1.xip.io&#x27;</span>,<span class="string">&#x27;::ffff:127.0.0.1&#x27;</span>,<span class="string">&#x27;127.0.0.1&#x27;</span>,<span class="string">&#x27;0&#x27;</span>,<span class="string">&#x27;localhost&#x27;</span>,<span class="string">&#x27;0.0.0.0&#x27;</span>,<span class="string">&#x27;[::1]&#x27;</span>,<span class="string">&#x27;::1&#x27;</span>];</span><br><span class="line"></span><br><span class="line">router.get(<span class="string">&#x27;/&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">    res.json(&#123;&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">router.get(<span class="string">&#x27;/debug&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(req.ip);</span><br><span class="line">    <span class="keyword">if</span>(blacklist.indexOf(req.ip)!=-<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;res&#x27;</span>);</span><br><span class="line">	<span class="keyword">var</span> u=req.query.url.replace(<span class="regexp">/[\&quot;\&#x27;]/ig</span>,<span class="string">&#x27;&#x27;</span>);</span><br><span class="line">	<span class="built_in">console</span>.log(url.parse(u).href);</span><br><span class="line">	<span class="keyword">let</span> log=<span class="string">`echo  &#x27;<span class="subst">$&#123;url.parse(u).href&#125;</span>&#x27;&gt;&gt;/tmp/log`</span>;</span><br><span class="line">	<span class="built_in">console</span>.log(log);</span><br><span class="line">	child_process.exec(log);</span><br><span class="line">	res.json(&#123;<span class="attr">data</span>:fs.readFileSync(<span class="string">&#x27;/tmp/log&#x27;</span>).toString()&#125;);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        res.json(&#123;&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">router.post(<span class="string">&#x27;/debug&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(req.body);</span><br><span class="line">    <span class="keyword">if</span>(req.body.url !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> u = req.body.url;</span><br><span class="line">	<span class="keyword">var</span> urlObject=url.parse(u);</span><br><span class="line">	<span class="keyword">if</span>(blacklist.indexOf(urlObject.hostname) == -<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">var</span> dest=urlObject.href;</span><br><span class="line">		request(dest,<span class="function">(<span class="params">err,result,body</span>)=&gt;</span>&#123;</span><br><span class="line">			res.json(body);</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		res.json([]);</span><br><span class="line">	&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = router;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>console.log() : 控制台输出文本信息。</p>
+</blockquote>
+<blockquote>
+<p>url.parse() : 将路径解析为一个方便操作的对象。</p>
+</blockquote>
+<blockquote>
+<p>readFileSync() : 同步读取文件。</p>
+</blockquote>
+<p>get请求上可以命令注入，但是当且仅当请求<code>ip</code>为本机时才可进入。</p>
+<p>post请求上会进行二次请求，但是请求的<code>url</code>不能为本地ip。</p>
+<p>思路：post请求中带url参数进行get请求。</p>
+<h2 id="本地回环地址"><a href="#本地回环地址" class="headerlink" title="本地回环地址"></a>本地回环地址</h2><p>本地回环地址<code>127.0.0.1</code>指的是本机地址，不会跟着网络情况的变化而变化。它代表设备的本地虚拟接口，所以默认被看作是永远不会宕掉的接口。<strong>实际上：<code>127.0.0.1</code> —&gt; <code>127.255.255.254</code>的范围都是本地回环地址</strong>。</p>
+<p>一般用来测试本机的网络配置：能<code>ping</code>通<code>127.0.0.1</code>说明本机的IP协议安装没有问题。</p>
+<p>或者代替<code>localhost</code>:windows中路径为<code>C:\windows\system32\drivers\etc\hosts</code>,Unix/Linux路径为<code>/etc/hosts</code>,将<code>localhost</code>与<code>127.0.0.1</code>绑定在了一起。</p>
+<p>此题中由于<code>127.0.0.1</code>到<code>127.255.255.254</code>都是回环地址，所以可用<code>127.0.0.2</code>绕过。（127.1）</p>
+<h2 id="tail-F-dev-null"><a href="#tail-F-dev-null" class="headerlink" title="tail -F /dev/null"></a>tail -F /dev/null</h2><p>一般会利用<code>tail -f /dev/null</code>让容器一直处于<code>runing</code>状态，但是如果存在多个<code>CMD</code>指令，仅最后一个生效。</p>
+<p>给两个wp也做不动。真没看明白，遂放弃。但还是学到了很多新东西。ssrf的题真难a。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/fyly/p/12827528.html">https://www.cnblogs.com/fyly/p/12827528.html</a></p>
+<p><a target="_blank" rel="noopener" href="http://events.jianshu.io/p/8847cc103c66">http://events.jianshu.io/p/8847cc103c66</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_34146986/article/details/91516493?utm_term=web%E7%BD%91%E7%AB%99%E6%BA%90%E7%A0%81%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B&amp;utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~sobaiduweb~default-1-91516493&amp;spm=3001.4430">https://blog.csdn.net/weixin_34146986/article/details/91516493?utm_term=web%E7%BD%91%E7%AB%99%E6%BA%90%E7%A0%81%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B&amp;utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~sobaiduweb~default-1-91516493&amp;spm=3001.4430</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/117f12a72abd">https://www.jianshu.com/p/117f12a72abd</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45830543/article/details/113035212">https://blog.csdn.net/qq_45830543/article/details/113035212</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44555613/article/details/90897777">https://blog.csdn.net/weixin_44555613/article/details/90897777</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013452990/article/details/104535861">https://blog.csdn.net/u013452990/article/details/104535861</a></p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="https://suyumen.github.io">suyumen</a></p><p> <span>Link:  </span><a href="https://suyumen.github.io/2021/08/06/2021-08-06-[%E7%BD%91%E9%BC%8E%E6%9D%AF2020]BabyJS/">https://suyumen.github.io/2021/08/06/2021-08-06-[%E7%BD%91%E9%BC%8E%E6%9D%AF2020]BabyJS/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="nextSlogan" href="/2021/08/03/2021-08-03-j%E5%B0%9D%E8%AF%95%E8%A7%A3%E5%86%B3blog%E6%A8%A1%E6%9D%BF%E7%9A%84%E6%BB%9A%E5%8A%A8%E6%9D%A1bug/" title="尝试解决blog模板的滚动条bug"><span>NextPost ></span><br><span class="nextTitle">尝试解决blog模板的滚动条bug</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span> | theme <span>Cxo</span><!--a(href='https://github.com/Longlongyu/hexo-theme-Cxo')--></span></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%9B%9E%E7%8E%AF%E5%9C%B0%E5%9D%80"><span class="toc-number">1.</span> <span class="toc-text">本地回环地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tail-F-dev-null"><span class="toc-number">2.</span> <span class="toc-text">tail -F &#x2F;dev&#x2F;null</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">2.1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
