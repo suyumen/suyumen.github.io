@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="suyumen"><meta name="renderer" content="webkit"><meta name="copyright" content="suyumen"><meta name="keywords" content="SUYUMEN"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>SUYUMEN</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><meta name="generator" content="Hexo 5.4.0"></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/avatar.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">suyumen</div><div class="profile-signature">目前主要在学习web相关</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/back.jpg);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">SUYUMEN</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1>SUYUMEN</h1><h5>---在学了在学了qaQ---</h5><div class="intro-social"><a class="fa fa-envelope" href="mailto:3403232965@qq.com" title="email"></a><a class="fa fa-github" href="https://github.com/suyumen" target="_blank" title="github"></a></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><section id="recent-posts"><div class="recent-post-item"><div class="post-title"><a href="/2021/07/08/2021-07-08-php%E7%9A%84%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1/">php的类与对象</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2021-07-07T18:27:24.000Z">2021-07-08</time></div><div class="recent-post-content"><hr>
+<p>因为碰到反序列化的题会碰到php的类相关的知识，有时候看代码不太懂，所以特意学习一下php的类与对象。军训太忙了，中午要洗衣服睡觉，晚上要搞志协的工作然后就又要睡觉了……水成两篇，下一篇记序列化相关的东西。</p>
+<hr>
+<h2 id="类定义"><a href="#类定义" class="headerlink" title="类定义"></a>类定义</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Site</span> </span>&#123;</span><br><span class="line">  <span class="comment">/* 成员变量 */</span></span><br><span class="line">  <span class="keyword">var</span> <span class="variable">$url</span>;</span><br><span class="line">  <span class="keyword">var</span> <span class="variable">$title</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">/* 成员函数 */</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">setUrl</span>(<span class="params"><span class="variable">$par</span></span>)</span>&#123;</span><br><span class="line">     <span class="keyword">$this</span>-&gt;url = <span class="variable">$par</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">getUrl</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">     <span class="keyword">echo</span> <span class="keyword">$this</span>-&gt;url . PHP_EOL;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">setTitle</span>(<span class="params"><span class="variable">$par</span></span>)</span>&#123;</span><br><span class="line">     <span class="keyword">$this</span>-&gt;title = <span class="variable">$par</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">getTitle</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">     <span class="keyword">echo</span> <span class="keyword">$this</span>-&gt;title . PHP_EOL;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="php常识"> php常识</a></div><div class="read-more"><a class="more" href="/2021/07/08/2021-07-08-php%E7%9A%84%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2021/07/03/2021-07-06-php%E5%BC%82%E6%88%96%E8%AE%A1%E7%AE%97/">php异或计算</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2021-07-02T18:27:24.000Z">2021-07-03</time></div><div class="recent-post-content"><hr>
+<h2 id="绕过原理"><a href="#绕过原理" class="headerlink" title="绕过原理"></a>绕过原理</h2><p>1.字符异或计算。</p>
+<p>2.如<code>eval()</code>函数在执行时，如果内部有计算式，会先进行计算再执行函数。</p>
+<h2 id="常用场景"><a href="#常用场景" class="headerlink" title="常用场景"></a>常用场景</h2><p>1.eval()命令执行；<br>2.正则未过滤异或计算符。</p></div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="异或绕过"> 异或绕过</a></div><div class="read-more"><a class="more" href="/2021/07/03/2021-07-06-php%E5%BC%82%E6%88%96%E8%AE%A1%E7%AE%97/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2021/07/03/2021-07-03-%5B%E7%BE%8A%E5%9F%8E%E6%9D%AF2020%5DEasyphp2/">羊城杯2020Easyphp2</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2021-07-02T18:27:24.000Z">2021-07-03</time></div><div class="recent-post-content"><hr>
+<p>进入之后界面显示</p>
+<blockquote>
+<p>404 Sorry, only people from GWHT are allowed to access this website.23333</p>
+</blockquote>
+<p>观察到<code>url</code>是</p>
+<p><code>http://3d9dc9d7-0e2a-4cb9-93ad-3f176e320dd3.node4.buuoj.cn/?file=GWHT.php</code></p>
+<p>扫了一下目录，在<code>/robots.txt</code>得到<code>Disallow: /?file=check.php</code></p>
+<p>考虑用<code>php://filter</code>协议</p>
+<p>试一下</p>
+<blockquote>
+<p>/?file=php://filter/read=convert.base64-encode/resource=check.php</p>
+</blockquote></div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="php伪协议"> php伪协议</a></div><div class="read-more"><a class="more" href="/2021/07/03/2021-07-03-%5B%E7%BE%8A%E5%9F%8E%E6%9D%AF2020%5DEasyphp2/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2021/05/20/2021-05-20-%5BNCTF2019%5DSQLi/">NCTF-2019-SQLi</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2021-05-19T18:27:24.000Z">2021-05-20</time></div><div class="recent-post-content"><hr>
+<p>特意找点<code>sql</code>注入的题来写写（万一能自己写出来了呢……）</p>
+<p>开题是登录界面，给了源逻辑</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlquery : <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> users <span class="keyword">where</span> username<span class="operator">=</span><span class="string">&#x27;&#x27;</span> <span class="keyword">and</span> passwd<span class="operator">=</span><span class="string">&#x27;&#x27;</span></span><br></pre></td></tr></table></figure></div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="sql注入"> sql注入</a><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="正则注入"> 正则注入</a></div><div class="read-more"><a class="more" href="/2021/05/20/2021-05-20-%5BNCTF2019%5DSQLi/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2021/05/19/2021-05-19-%5BSUCTF%202019%5DEasySQL/">SUCTF-2019-EasySQL</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2021-05-18T18:27:24.000Z">2021-05-19</time></div><div class="recent-post-content"><hr>
+<p><code>POST</code>数字后回显<code>Array ( [0] =&gt; 1 )</code>；</p>
+<p>字母后没有回显；</p>
+<p>有长度限制；</p>
+<p>过滤了<code>OR ，&amp; ，select * from ，flag</code></p></div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="sql注入"> sql注入</a><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="堆叠注入"> 堆叠注入</a></div><div class="read-more"><a class="more" href="/2021/05/19/2021-05-19-%5BSUCTF%202019%5DEasySQL/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2021/05/16/2021-05-16-%5BSUCTF%202019%5DCheckIn/">SUCTF-2019-CheckIn</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2021-05-15T18:27:24.000Z">2021-05-16</time></div><div class="recent-post-content"><hr>
+<p><strong>签到题</strong>耶，我还以为我能写，，原来我<strong>还是不会写</strong>[乌乌]。</p>
+<p>打开站点就是<strong>文件上传</strong>。</p>
+<p>试了：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">&quot;php&quot;</span>&gt;</span><span class="javascript"><span class="built_in">eval</span>($_GET[<span class="string">&#x27;mycode&#x27;</span>]);</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<p>回显<code>exif_imagetype:not image!</code></p></div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="文件上传"> 文件上传</a></div><div class="read-more"><a class="more" href="/2021/05/16/2021-05-16-%5BSUCTF%202019%5DCheckIn/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2021/05/14/2021-05-14-%5BHFCTF%202021%20Final%5Deasyflask/">HFCTF-2021-Final-easyflask</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2021-05-13T18:27:24.000Z">2021-05-14</time></div><div class="recent-post-content"><hr>
+<p>虽然是五一布置的作业，然而五一的时候完全不会。才对<code>flask</code>有一点点了解，过来写写这个试试吧，希望可以多做一些步骤。</p>
+<hr>
+<p>根据页面指示，在<code>file?file=/app/source</code>得到源码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3.6</span></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, render_template, session</span><br><span class="line"><span class="keyword">from</span> base64 <span class="keyword">import</span> b64decode</span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.config[<span class="string">&quot;SECRET_KEY&quot;</span>] = <span class="string">&quot;*******&quot;</span></span><br><span class="line">User = <span class="built_in">type</span>(</span><br><span class="line">    <span class="string">&#x27;User&#x27;</span>, (<span class="built_in">object</span>,),</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;uname&#x27;</span>: <span class="string">&#x27;test&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;is_admin&#x27;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="string">&#x27;__repr__&#x27;</span>: <span class="keyword">lambda</span></span><br><span class="line">        o: o.uname,</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@ app.route(<span class="params"><span class="string">&#x27;/&#x27;</span>, methods=(<span class="params"><span class="string">&#x27;GET&#x27;</span>,</span>)</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index_handler</span>():</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> session.get(<span class="string">&#x27;u&#x27;</span>):</span><br><span class="line">        u = pickle.dumps(User())</span><br><span class="line">        session[<span class="string">&#x27;u&#x27;</span>] = u</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;/file?file=index.js&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@ app.route(<span class="params"><span class="string">&#x27;/file&#x27;</span>, methods=(<span class="params"><span class="string">&#x27;GET&#x27;</span>,</span>)</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">file_handler</span>():</span></span><br><span class="line">    path = request.args.get(<span class="string">&#x27;file&#x27;</span>)</span><br><span class="line">    path = os.path.join(<span class="string">&#x27;static&#x27;</span>, path)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(path) <span class="keyword">or</span> os.path.isdir(path) <span class="keyword">or</span> <span class="string">&#x27;.py&#x27;</span> <span class="keyword">in</span> path <span class="keyword">or</span> <span class="string">&#x27;.sh&#x27;</span> <span class="keyword">in</span> path <span class="keyword">or</span> <span class="string">&#x27;..&#x27;</span> <span class="keyword">in</span> path <span class="keyword">or</span> <span class="string">&quot;flag&quot;</span> <span class="keyword">in</span> path:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;disallowed&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(path, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">        content = fp.read()</span><br><span class="line">        <span class="keyword">return</span> content</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@ app.route(<span class="params"><span class="string">&#x27;/admin&#x27;</span>, methods=(<span class="params"><span class="string">&#x27;GET&#x27;</span>,</span>)</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">admin_handler</span>():</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        u = session.get(<span class="string">&#x27;u&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(u, <span class="built_in">dict</span>):</span><br><span class="line">            u = b64decode(u.get(<span class="string">&#x27;b&#x27;</span>))</span><br><span class="line">            u = pickle.loads(u)</span><br><span class="line">    <span class="keyword">except</span> Exception:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;uhh?&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> u.is_admin == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;welcome, admin&#x27;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;who are you?&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(<span class="string">&#x27;0.0.0.0&#x27;</span>, port=<span class="number">80</span>, debug=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure></div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="反序列化"> 反序列化</a></div><div class="read-more"><a class="more" href="/2021/05/14/2021-05-14-%5BHFCTF%202021%20Final%5Deasyflask/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2021/05/13/2021-05-13-%5BFBCTF2019%5DEvent/">FBCTF2019-Event</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2021-05-12T18:27:24.000Z">2021-05-13</time></div><div class="recent-post-content"><hr>
+<p>打开是登录界面，看了一下源码，发现一段：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">&quot;nav-link&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/flag&quot;</span>&gt;</span>Admin panel<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>直接访问回显<code>You have to login first.</code>;</p>
+<p><code>dirsearch</code>扫了一下，没东西。</p>
+<p>随便输入，抓包，发现response的 <code>cookie</code>很奇怪：</p></div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="cookie伪造"> cookie伪造</a><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="ssti"> ssti</a></div><div class="read-more"><a class="more" href="/2021/05/13/2021-05-13-%5BFBCTF2019%5DEvent/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2021/05/08/2021-05-08-%5BGYCTF2020%5DEzsqli/">GYCTF-2020-Ezsqli</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2021-05-07T18:27:24.000Z">2021-05-08</time></div><div class="recent-post-content"><hr>
+<p>看题目是<strong>sql注入</strong>相关，正好开始学一下。</p>
+<p>初始站点有个<code>post</code>框框，输个<code>1</code>进去抓包,了解到参数是<code>$id</code>,转到<code>intruder</code>模块随便拿了个payload对<code>$id</code>爆破一下，发现几种回显：</p>
+<blockquote>
+<p>Nu1L<br>bool(false)<br>SQL Injection Checked.<br>Error Occured When Fetch Result.<br>V&amp;N</p>
+</blockquote>
+<p>通过<code>SQL Injection Checked.</code>发现<code>and</code>,<code>or</code>,<code>information_schema</code>,<code>union select</code>被过滤了</p></div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="sql注入"> sql注入</a><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="布尔盲注"> 布尔盲注</a></div><div class="read-more"><a class="more" href="/2021/05/08/2021-05-08-%5BGYCTF2020%5DEzsqli/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/2021/05/01/2021-05-01-%5BGYCTF2020%5DEasyphp/">GYCTF-2020-Easyphp</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2021-04-30T18:27:24.000Z">2021-05-01</time></div><div class="recent-post-content"><hr>
+<p>直接给了源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$_</span> = @<span class="variable">$_GET</span>[<span class="string">&#x27;_&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span> ( preg_match(<span class="string">&#x27;/[\x00- 0-9\&#x27;&quot;`$&amp;.,|[&#123;_defgops\x7F]+/i&#x27;</span>, <span class="variable">$_</span>) )</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&#x27;rosé will not do it&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ( strlen(count_chars(strtolower(<span class="variable">$_</span>), <span class="number">0x3</span>)) &gt; <span class="number">0xd</span> )</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&#x27;you are so close, omg&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">eval</span>(<span class="variable">$_</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="异或绕过"> 异或绕过</a></div><div class="read-more"><a class="more" href="/2021/05/01/2021-05-01-%5BGYCTF2020%5DEasyphp/#more">ReadMore</a></div><hr></div></section><nav class="cxo-page-nav"><a class="extend prev" rel="prev" href="/">&amp;#60; PREV</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">NEXT &gt;</a></nav></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by <span>Hexo</span></span><span> | theme <span>Cxo</span></span></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
