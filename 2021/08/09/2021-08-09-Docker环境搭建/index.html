@@ -97,9 +97,9 @@
   }
 }( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><meta name="generator" content="Hexo 5.4.0"></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/avatar.jpg"></div><!--.profile-saying
   i.fa.fa-comment
-  .saying--><div class="cxo-profile-inner"><div class="profile-name">suyumen</div><div class="profile-signature">目前主要在学习web相关</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/back.jpg);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">SUYUMEN</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">Docker环境搭建</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2021-08-09</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="工具"> 工具</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="Docker"> Docker</a></span></div><div class="post-intro-read"><span> Word count: <span class="post-count">419</span> | Reading time: <span class="post-count">1</span>min</span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><hr>
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">suyumen</div><div class="profile-signature">目前主要在学习web相关</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/back.jpg);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">SUYUMEN</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">Docker环境搭建</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2021-08-09</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="工具"> 工具</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="Docker"> Docker</a></span></div><div class="post-intro-read"><span> Word count: <span class="post-count">444</span> | Reading time: <span class="post-count">1</span>min</span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><hr>
 <p>环境：win10，Docker当前最新版。</p>
-<p>因为想尝试一下出<code>web</code>题，所以开始配一个<code>Docker</code>的环境。</p>
+<p>因为想尝试一下出<code>web</code>题（完了好像别人都出够题了，那算了，反正我也就能出个签到题），所以开始配一个<code>Docker</code>的环境。</p>
 <p>下载地址(官网）：<a target="_blank" rel="noopener" href="https://hub.docker.com/">https://hub.docker.com/</a></p>
 <span id="more"></span>
 
@@ -114,7 +114,7 @@
 <p>若弹窗报错“WSL 2 installation is incomplete.”</p>
 <p>需要升级<code>wsl2</code>版本,地址：<a target="_blank" rel="noopener" href="https://wslstorestorage.raw.core.windows.net/wslblob/wsl_update_x64.msi">https://wslstorestorage.raw.core.windows.net/wslblob/wsl_update_x64.msi</a></p>
 <p>并在<code>Windows</code>功能（计算机右键属性—&gt;查找框中搜索“程序”—–&gt;“可选功能”——-&gt;更多windows功能)中开启”windows虚拟机监控程序平台”和“适用于linux的windows子系统”。</p>
-<p><img src="https://github.com/suyumen/suyumen.github.io/raw/master/img/assets/20210809-1.jpg?raw=true" alt="windows功能"></p>
+<p><img src="https://img-blog.csdnimg.cn/08537d674be54b818381b1ac10930578.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl81MTc2Nzk1Mg==,size_16,color_FFFFFF,t_70#pic_center"></p>
 <p>重启电脑再进入<code>Docker</code>就不报错了。</p>
 <p>按照<code>Docker</code>自带的教程,输入命令：</p>
 <blockquote>
@@ -125,7 +125,7 @@
 <p>Unable to find image ‘docker/getting-started:latest’ locally</p>
 </blockquote>
 <p>可在<code>settings</code>里的<code>Docker Engine</code>修改<code>registry-mirrors</code>为”<a target="_blank" rel="noopener" href="https://alzgoonw.mirror.aliyuncs.com&quot;(阿里云镜像源)./">https://alzgoonw.mirror.aliyuncs.com&quot;（阿里云镜像源）。</a></p>
-<p><img src="https://github.com/suyumen/suyumen.github.io/raw/master/img/assets/20210809-2.jpg?raw=true" alt="registry-mirrors"></p>
+<p><img src="https://img-blog.csdnimg.cn/2b53f3c0c7cf42e6931bd7d627b012c6.jpg#pic_center"></p>
 <p>再次输入上述命令，创建成功。</p>
 <blockquote>
 <p>docker ps</p>
