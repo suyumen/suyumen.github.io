@@ -99,7 +99,7 @@
   i.fa.fa-comment
   .saying--><div class="cxo-profile-inner"><div class="profile-name">suyumen</div><div class="profile-signature">目前主要在学习web相关</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/back.jpg);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">SUYUMEN</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">网鼎杯-2018-Fakebook</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2021-07-30</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="源码泄露"> 源码泄露</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="反序列化"> 反序列化</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="ssrf"> ssrf</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="file协议"> file协议</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="联合查询注入"> 联合查询注入</a></span></div><div class="post-intro-read"><span> Word count: <span class="post-count">867</span> | Reading time: <span class="post-count">4</span>min</span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><hr>
 <p>一开始是这个界面。</p>
-<p><img src="https://github.com/suyumen/suyumen.github.io/blob/master/img/assets/2021730-1.jpg?raw=true" alt="初始界面"></p>
+<p><img src="https://github.com/suyumen/suyumen.github.io/raw/master/img/assets/2021730-1.jpg?raw=true" alt="初始界面"></p>
 <p>面对这种复杂的界面（一堆按钮的界面）通常我都不会做。。</p>
 <p>扫一下。</p>
 <p><code>robots.txt</code>有东西：</p>
@@ -114,7 +114,7 @@
 <p>一堆<code>curl</code>函数估计是<code>ssrf</code>！<br>其中<code>get()</code>函数传参<code>url</code></p>
 <p>审计一下代码，</p>
 <p>注册一下：</p>
-<p><img src="https://github.com/suyumen/suyumen.github.io/blob/master/img/assets/2021730-2.jpg?raw=true" alt="join界面"></p>
+<p><img src="https://github.com/suyumen/suyumen.github.io/raw/master/img/assets/2021730-2.jpg?raw=true" alt="join界面"></p>
 <p>点了一下<code>username</code>，</p>
 <p>观察url多了一个<code>no</code>参数，此时是1,且是注入点。<code>sqlmap</code>没跑出来（可能是我用的不对），果然没有什么一把梭的事。。</p>
 <blockquote>
@@ -155,7 +155,7 @@
 <blockquote>
 <p>no=-1 union/**/select 1,2,3,4#</p>
 </blockquote>
-<p><img src="https://github.com/suyumen/suyumen.github.io/blob/master/img/assets/20210801-1.jpg?raw=true" alt="探测位"></p>
+<p><img src="https://github.com/suyumen/suyumen.github.io/raw/master/img/assets/20210801-1.jpg?raw=true" alt="探测位"></p>
 <p>得到探测位是2。还看到了报错里面有反序列化函数。</p>
 <h4 id="查库名"><a href="#查库名" class="headerlink" title="查库名"></a>查库名</h4><blockquote>
 <p>no=-1 union/**/select 1,database(),3,4#</p>
@@ -172,7 +172,7 @@
 <h4 id="查行信息"><a href="#查行信息" class="headerlink" title="查行信息"></a>查行信息</h4><blockquote>
 <p>no=0 union/**/select 1,group_concat(no,username,passwd,data),3,4 from users#</p>
 </blockquote>
-<p><img src="https://github.com/suyumen/suyumen.github.io/blob/master/img/assets/20210801-2.jpg?raw=true" alt="行信息"></p>
+<p><img src="https://github.com/suyumen/suyumen.github.io/raw/master/img/assets/20210801-2.jpg?raw=true" alt="行信息"></p>
 <p>看到有一段序列化变量，正好对应之前扫出来那个文件的类对象。</p>
 <hr>
 <p>说能扫到一个<code>flag.php</code>文件，但是我用<code>dirsearch</code>没扫出来……</p>
