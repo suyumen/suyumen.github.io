@@ -97,7 +97,7 @@
   }
 }( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><meta name="generator" content="Hexo 5.4.0"></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/avatar.jpg"></div><!--.profile-saying
   i.fa.fa-comment
-  .saying--><div class="cxo-profile-inner"><div class="profile-name">suyumen</div><div class="profile-signature">目前主要在学习web相关</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/back.jpg);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">SUYUMEN</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">Docker环境搭建</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2021-08-09</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="工具"> 工具</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="Docker"> Docker</a></span></div><div class="post-intro-read"><span> Word count: <span class="post-count">451</span> | Reading time: <span class="post-count">1</span>min</span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><p>环境：win10，Docker当前最新版。</p>
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">suyumen</div><div class="profile-signature">目前主要在学习web相关</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/back.jpg);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">SUYUMEN</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">Docker环境搭建</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2021-08-09</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="工具"> 工具</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="Docker"> Docker</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="Dockerfile"> Dockerfile</a></span></div><div class="post-intro-read"><span> Word count: <span class="post-count">640</span> | Reading time: <span class="post-count">2</span>min</span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><p>环境：win10，Docker当前最新版。</p>
 <p>因为想尝试一下出<code>web</code>题（完了好像别人都出够题了，那算了，反正我也就能出个签到题），所以开始配一个<code>Docker</code>的环境。</p>
 <p>下载地址(官网）：<a target="_blank" rel="noopener" href="https://hub.docker.com/">https://hub.docker.com/</a></p>
 <span id="more"></span>
@@ -126,27 +126,84 @@
 <p>可在<code>settings</code>里的<code>Docker Engine</code>修改<code>registry-mirrors</code>为”<a target="_blank" rel="noopener" href="https://alzgoonw.mirror.aliyuncs.com&quot;(阿里云镜像源)./">https://alzgoonw.mirror.aliyuncs.com&quot;（阿里云镜像源）。</a></p>
 <p><img src="https://img-blog.csdnimg.cn/2b53f3c0c7cf42e6931bd7d627b012c6.jpg#pic_center"></p>
 <p>再次输入上述命令，创建成功。</p>
-<blockquote>
-<p>docker ps</p>
-</blockquote>
-<p>会显示<code>CONTAINER ID   IMAGE                    COMMAND                  CREATED          STATUS          PORTS     </code>信息。</p>
-<blockquote>
-<p>docker exec -it [ID] sh</p>
-</blockquote>
-<p>进入容器。</p>
-<blockquote>
-<p>docker inspect [ID]</p>
-</blockquote>
-<p>查看当前容器的 IP。</p>
-<blockquote>
-<p>curl 172.17.0.2               </p>
-</blockquote>
-<p>测试容器是否可以访问。</p>
-<blockquote>
-<p>docker rmi [ID]</p>
-</blockquote>
-<p>删除镜像。</p>
+<h2 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>docker ps</td>
+<td>显示CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS信息</td>
+</tr>
+<tr>
+<td>docker exec -it [ID] sh</td>
+<td>进入容器</td>
+</tr>
+<tr>
+<td>docker inspect [ID]</td>
+<td>查看当前容器的 IP</td>
+</tr>
+<tr>
+<td>docker rmi [ID]</td>
+<td>删除镜器</td>
+</tr>
+<tr>
+<td>docker run -d -i -t [ID] /bin/bash</td>
+<td>启动容器</td>
+</tr>
+<tr>
+<td>docker exec -it [ID] /bin/sh</td>
+<td>退出容器</td>
+</tr>
+</tbody></table>
+<h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FROM <image></td>
+<td>指定基础镜像，必须为第一个命令</td>
+</tr>
+<tr>
+<td>MAINTAINER <name></td>
+<td>维护者信息</td>
+</tr>
+<tr>
+<td>RUN <command></td>
+<td>构建镜像时执行的命令</td>
+</tr>
+<tr>
+<td>ADD <src>… <dest></td>
+<td>将本地文件添加到容器中,tar类型文件会自动解压(网络压缩资源不会被解压)，可以访问网络资源</td>
+</tr>
+<tr>
+<td>COPY <src>… <dest></td>
+<td>将本地文件添加到容器中,不会自动解压，不可以访问网络资源</td>
+</tr>
+<tr>
+<td>CMD <command></td>
+<td>构建容器后调用的命令</td>
+</tr>
+<tr>
+<td>ENV <key> <value></td>
+<td>设置环境变量</td>
+</tr>
+<tr>
+<td>EXPOSE <port> [<port>…]</td>
+<td>指定于外界交互的端口</td>
+</tr>
+</tbody></table>
+<p>由<code>Dockerfile</code>构建镜像：</p>
+<p>先进入<code>Dockerfile</code>所在的文件夹内，注意<code>Dockerfile</code>无后缀且D大写。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t &lt;镜像名字&gt; .</span><br></pre></td></tr></table></figure>
+
 <hr>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xinzaiyuan/p/12608180.html">https://www.cnblogs.com/xinzaiyuan/p/12608180.html</a></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/panwenbin-logs/p/8007348.html">https://www.cnblogs.com/panwenbin-logs/p/8007348.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xinzaiyuan/p/12608180.html">https://www.cnblogs.com/xinzaiyuan/p/12608180.html</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ypp91zr/article/details/89061175">https://blog.csdn.net/ypp91zr/article/details/89061175</a></p>
-</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="https://suyumen.github.io">suyumen</a></p><p> <span>Link:  </span><a href="https://suyumen.github.io/2021/08/09/2021-08-09-Docker%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">https://suyumen.github.io/2021/08/09/2021-08-09-Docker%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2021/08/13/2021-08-13-%5BSWPU2019%5Deasy_python/" title="SWPU2019-easy_python"><span>< PreviousPost</span><br><span class="prevTitle">SWPU2019-easy_python</span></a><a class="nextSlogan" href="/2021/08/06/2021-08-06-%5B%E7%BD%91%E9%BC%8E%E6%9D%AF2020%5DBabyJS/" title="网鼎杯-2020-BabyJS"><span>NextPost ></span><br><span class="nextTitle">网鼎杯-2020-BabyJS</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by <span>Hexo</span></span><span> | theme <span>Cxo</span></span></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.</span> <span class="toc-text">参考</span></a></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="https://suyumen.github.io">suyumen</a></p><p> <span>Link:  </span><a href="https://suyumen.github.io/2021/08/09/2021-08-09-Docker%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">https://suyumen.github.io/2021/08/09/2021-08-09-Docker%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2021/08/13/2021-08-13-%5BSWPU2019%5Deasy_python/" title="SWPU2019-easy_python"><span>< PreviousPost</span><br><span class="prevTitle">SWPU2019-easy_python</span></a><a class="nextSlogan" href="/2021/08/06/2021-08-06-%5B%E7%BD%91%E9%BC%8E%E6%9D%AF2020%5DBabyJS/" title="网鼎杯-2020-BabyJS"><span>NextPost ></span><br><span class="nextTitle">网鼎杯-2020-BabyJS</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by <span>Hexo</span></span><span> | theme <span>Cxo</span></span></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker"><span class="toc-number">1.</span> <span class="toc-text">Docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dockerfile"><span class="toc-number">2.</span> <span class="toc-text">Dockerfile</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">2.1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
