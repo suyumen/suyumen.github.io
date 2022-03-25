@@ -108,7 +108,7 @@
 <h3 id="原型链污染"><a href="#原型链污染" class="headerlink" title="原型链污染"></a>原型链污染</h3><p>原型链污染指的是：如果能够控制并修改一个对象的原型，那么将可以影响所有和这个对象来自同一个类、父祖类的对象。</p>
 <p>在可以设置<code>__proto__</code>的值的情况下，就可以完成原型链污染。</p>
 <p>找到能够控制数组（对象）的“键名”的操作比如：</p>
-<p>1.对象<code>merge</code>:<br>`</p>
+<p>1.对象<code>merge</code>:</p>
 <p>2.对象<code>clone</code></p>
 <p>构造类似如下代码段：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">JSON</span>.parse(<span class="string">&#x27;&#123;&quot;a&quot;: 1, &quot;__proto__&quot;: &#123;&quot;b&quot;: 2&#125;&#125;&#x27;</span>)</span><br></pre></td></tr></table></figure>
