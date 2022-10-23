@@ -118,8 +118,6 @@
 <p><img src="https://img-blog.csdnimg.cn/1138246e472d43999ec30e9c1a08bb27.png" alt="内存"></p>
 <p>重新运行程序，输入qqqqqqqqrst击中断点，F8单步步过，右键堆栈窗口中跟随，查看堆栈0012FB18处的变化，可以看出，由于填写的字符串超过位数，已经将位于0012FB20的邻接变量authenticated 覆盖。</p>
 <p><img src="https://img-blog.csdnimg.cn/04beb4ad2d6c48449f8131e1f5b398bd.png" alt="堆栈"></p>
-<p>图 7 长密码复制前的堆栈</p>
-<p><img src="media/e91b9b71bd71c9fc201f9c75bb1bfec8.png"></p>
 <p>重新运行程序，输入qqqqqqqq击中断点，F8单步步过，右键堆栈窗口中跟随，查看堆栈0012FB18处的情况，发现由于填写的字符串超过位数，已经将位于0012FB20的邻接变量authenticated 覆盖成了字符串的结尾00，导致verify_password函数返回0，在后续的判断中判定为密码正确。</p>
 <p><img src="https://img-blog.csdnimg.cn/957a818fc0974ee5b2a716cfb7c875da.png" alt="堆栈"></p>
 <p><img src="https://img-blog.csdnimg.cn/c24618e9fe3047b7bf602284ea8f73bc.png" alt="修改原理"></p>
