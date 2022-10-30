@@ -144,7 +144,7 @@
 
 <p>有4个参数，<code>hWnd</code>表示要创建的消息框的所有者窗口的句柄。如果此参数为NULL，则消息框没有所有者窗口；<code>lPtext</code>表示要显示的消息；<code>lpCaption</code>表示对话框标题；<code>uType</code>表示对话框的内容和行为。对于弹窗bupt来说，这里的三个参数可以分别设置为null，bupt字符串地址，lab2字符串地址，null。</p>
 <p>VC打开main.cpp新建项目并生成exe文件，OllyDbg打开，查找调用树找到<code>memcpy</code>函数位置，F2下断点。运行到击中断点，此时ESP即参数复制字符串的目的地址是0012FAF0，而函数的返回地址即ebp+4位于0012FB24。即需要填充52个字节才能覆盖到memcpy函数的返回地址，在此基础上，还要传4个参数一个返回地址，即一共需要72个字节。</p>
-<p>在Debug文件夹下新建文件password.txt用UltraEdit打开，输入20组4321，在第14组填入MessageBoxA函数地址77E23D68覆盖memcpy函数的返回地址，在第15组填入ExitProcess函数地址77E7B0BB作为MessageBoxA函数的返回地址，在第16-19组填入MessageBoxA的参数00000000，0012FB40，0012FB3C，00000000在第20组填入字符串内容，最后添加字符串结尾20。</p>
+<p>在Debug文件夹下新建文件password.txt用UltraEdit打开，输入20组4321，在第14组填入MessageBoxA函数地址77E23D68覆盖memcpy函数的返回地址，在第15组填入ExitProcess函数地址77E7B0BB作为MessageBoxA函数的返回地址，在第16-19组填入MessageBoxA的参数00000000，0012FB40，0012FB3C，00000000在第20组填入字符串内容，最后添加字符串结尾00。</p>
 <p><img src="https://img-blog.csdnimg.cn/ed4d1ba762974fbea98d33199364d3be.png"></p>
 <p><img src="https://img-blog.csdnimg.cn/823f68627d254c158b0742cda1edd8d2.png"></p>
 <p><img src="https://img-blog.csdnimg.cn/03089420a633478aa1c6a0da88a3f68b.png"></p>
